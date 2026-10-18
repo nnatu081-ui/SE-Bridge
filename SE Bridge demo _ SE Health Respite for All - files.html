@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SE Bridge | SE Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--wash:#F9F7F5;--surface:#FFFFFF;--surface-2:#F3F1EF;--blue:#00A2B1;--blue-ink:#00727D;--on-blue:#FFFFFF;--blue-soft:#E2F4F6;--plum:#432844;--muted:#6D6E71;--line:#E4E1DF;--line-strong:#CEC8C6;--red:#E41A2E;--red-dark:#AB1323;--red-soft:#FDECEE;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121718;--wash:#1A2022;--surface:#1A2022;--surface-2:#232B2E;--blue:#2CC3D1;--blue-ink:#5FD3DE;--on-blue:#06292D;--blue-soft:#133034;--plum:#EDE6EE;--muted:#A5AAAD;--line:#2E383B;--line-strong:#3E4A4E;--red:#FF5A68;--red-dark:#FF8A94;--red-soft:#3A1C20;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121718;--wash:#1A2022;--surface:#1A2022;--surface-2:#232B2E;--blue:#2CC3D1;--blue-ink:#5FD3DE;--on-blue:#06292D;--blue-soft:#133034;--plum:#EDE6EE;--muted:#A5AAAD;--line:#2E383B;--line-strong:#3E4A4E;--red:#FF5A68;--red-dark:#FF8A94;--red-soft:#3A1C20;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--plum);font:400 17px/1.55 "Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3,h4{margin:0;font-weight:600;line-height:1.2;color:var(--plum)}
+h1{font-size:clamp(2rem,4.4vw,2.9rem);letter-spacing:-.015em}
+h2{font-size:1.75rem}h3{font-size:1.2rem}h4{font-size:1.02rem}
+p{margin:.4em 0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+code{font-size:.85em;background:var(--surface-2);padding:.05rem .35rem;border-radius:5px;word-break:break-all}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1240px;margin:0 auto;padding:.6rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.9rem;background:none;border:0;padding:0;cursor:pointer}
+.brand img{height:40px;width:auto;display:block}
+.divider{width:1px;height:30px;background:var(--line-strong)}
+nav{display:flex;gap:.2rem;margin-left:auto;overflow-x:auto;max-width:100%}
+nav button{background:none;border:0;padding:.5rem .8rem;border-radius:999px;cursor:pointer;color:var(--muted);white-space:nowrap;font-weight:600}
+nav button[aria-current="page"]{background:var(--blue-soft);color:var(--blue-ink)}
+main{max-width:1240px;margin:0 auto;padding:1.8rem 1.25rem 5rem}
+footer{max-width:1240px;margin:0 auto;padding:0 1.25rem 2.5rem;color:var(--muted);font-size:.88rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.page-head{margin-bottom:1.3rem}
+.page-head .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.rule::after{content:"";display:block;width:44px;height:3px;background:var(--red);border-radius:2px;margin-top:.5rem}
+.muted{color:var(--muted)}.small{font-size:.9rem}.tiny{font-size:.8rem}
+.btn{border:1px solid var(--blue-ink);background:var(--blue-ink);color:var(--on-blue);padding:.6rem 1.1rem;border-radius:10px;cursor:pointer;font-weight:700;min-height:44px}
+.btn.ghost{background:transparent;color:var(--blue-ink)}
+.btn.sm{padding:.35rem .75rem;font-size:.92rem;min-height:36px}
+.btn.danger{border-color:var(--red-dark);color:var(--red-dark);background:transparent}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{background:none;border:0;padding:0;color:var(--blue-ink);text-decoration:underline;cursor:pointer;font-weight:600}
+.btns{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.9rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.3rem}
+.gap>*+*{margin-top:1.1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+label{display:block;font-weight:600;margin:.8rem 0 .3rem;font-size:.95rem}
+input[type=text],input[type=email],input[type=number],select,textarea{width:100%;padding:.6rem .7rem;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);min-height:44px}
+textarea{min-height:120px;font-size:.85rem;line-height:1.45}
+input[type=range]{width:100%;accent-color:var(--blue-ink)}
+.hint{font-size:.85rem;color:var(--muted);margin-top:.25rem}
+.err{color:var(--red-dark);font-size:.92rem;margin-top:.45rem}
+.ok{background:var(--blue-soft);border-radius:10px;padding:.75rem 1rem;margin-top:.8rem}
+.warn{background:var(--red-soft);color:var(--red-dark);border-radius:10px;padding:.75rem 1rem;margin-top:.8rem}
+.soft{background:var(--wash);border-radius:12px;padding:1rem}
+.stat{background:var(--surface-2);border-radius:12px;padding:.9rem 1rem}
+.stat .n{font-size:1.65rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat .l{font-size:.86rem;color:var(--muted)}
+.stat .n.hid{font-size:1.15rem;padding:.25rem 0}
+.meter{height:12px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:.35rem 0}
+.meter>span{display:block;height:100%;background:var(--blue);transition:width .3s}
+.meter.hot>span{background:var(--red)}
+.hbar{display:grid;grid-template-columns:9.5rem 1fr 3.4rem;gap:.6rem;align-items:center;font-size:.92rem;margin:.3rem 0}
+.hbar .meter{margin:0}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{text-align:left;padding:.5rem .6rem;border-bottom:2px solid var(--line);font-weight:700}
+td{padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+td.hr{background:var(--blue-soft)}
+.scen{border:1px solid var(--line);border-radius:12px;padding:1rem}
+.scen.mid{border:2px solid var(--blue-ink)}
+.scen .n{font-size:1.65rem;font-weight:700;font-variant-numeric:tabular-nums}
+.subtabs{display:flex;gap:.2rem;border-bottom:1px solid var(--line);margin:0 0 1.3rem;overflow-x:auto}
+.subtabs button{background:none;border:0;border-bottom:3px solid transparent;padding:.6rem .9rem;cursor:pointer;color:var(--muted);font-weight:600;white-space:nowrap}
+.subtabs button[aria-selected="true"]{color:var(--blue-ink);border-bottom-color:var(--blue)}
+.product-logo{display:inline-flex;align-items:center;gap:.5rem}
+.product-logo svg{flex:none;display:block}
+.wordmark{color:var(--blue-ink);font-weight:600;white-space:nowrap}
+.wordmark b{color:var(--plum);font-weight:700}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:2.4rem;align-items:center;padding:1rem 0 2rem}
+.lead{font-size:1.15rem;color:var(--muted);max-width:36em}
+.steps-list{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps-list li{counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--line)}
+.steps-list li:last-child{border-bottom:0}
+.steps-list li::before{content:counter(s);width:1.7rem;height:1.7rem;border-radius:50%;background:var(--blue-soft);color:var(--blue-ink);font-weight:700;display:grid;place-items:center;font-size:.9rem}
+.phone{width:100%;max-width:400px;margin:0 auto;background:var(--surface);border:1px solid var(--line-strong);border-radius:30px;padding:1.2rem 1.1rem 1.4rem;position:relative}
+.phone-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.progress{display:flex;gap:.35rem;margin:.2rem 0 1rem}
+.progress span{flex:1;height:5px;border-radius:9px;background:var(--surface-2)}
+.progress span.on{background:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0}
+.chip{border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:.45rem .85rem;cursor:pointer;text-align:left;font-size:.95rem}
+.chip[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue-ink);font-weight:600}
+.chip.rm::after{content:" ×";color:var(--muted)}
+.svc{display:grid;gap:.5rem}
+.svc button{display:grid;grid-template-columns:2.2rem 1fr;gap:.6rem;text-align:left;align-items:center;border:1px solid var(--line-strong);background:var(--surface);border-radius:12px;padding:.7rem .8rem;cursor:pointer}
+.svc button[aria-pressed="true"]{border:2px solid var(--blue-ink);background:var(--blue-soft)}
+.svc .ic{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--blue-soft);display:grid;place-items:center;color:var(--blue-ink)}
+.svc b{display:block}.svc span.d{font-size:.86rem;color:var(--muted)}
+.check{display:flex;gap:.6rem;align-items:flex-start;margin-top:1rem;font-weight:400}
+.check input{margin-top:.3rem;width:20px;height:20px;accent-color:var(--blue-ink);flex:none}
+.visit{border:1px solid var(--line);border-radius:12px;padding:.8rem .95rem;margin-top:.6rem}
+.visit .top{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline;flex-wrap:wrap}
+.tag{display:inline-block;font-size:.8rem;padding:.1rem .55rem;border-radius:999px;background:var(--surface-2);color:var(--muted);font-weight:600}
+.tag.live{background:var(--blue-soft);color:var(--blue-ink)}
+.arrival{background:var(--blue-ink);color:var(--on-blue);border-radius:14px;padding:.85rem 1rem;margin:.6rem 0;display:flex;gap:.6rem;align-items:center}
+.arrival b{color:inherit}
+.summary dt{font-size:.82rem;color:var(--muted);margin-top:.6rem}
+.summary dd{margin:0;display:flex;justify-content:space-between;gap:.5rem;font-weight:600}
+.summary dd .link{font-size:.85rem}
+.modal-bg{position:absolute;inset:0;background:rgba(30,20,30,.45);border-radius:30px;display:flex;align-items:flex-end;padding:.6rem;z-index:3}
+.modal{background:var(--surface);border-radius:20px;padding:1.1rem;width:100%}
+.stars{display:flex;gap:.3rem;margin:.4rem 0}
+.stars button{background:none;border:0;cursor:pointer;padding:.15rem;min-width:40px;min-height:40px}
+.live{display:grid;grid-template-columns:minmax(240px,1fr) 2fr;gap:1.1rem}
+.live-now{background:var(--blue-soft);border-radius:18px;padding:1.3rem;display:flex;flex-direction:column;gap:.7rem}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--blue);display:inline-block;position:relative;margin-right:.45rem}
+.dot.on::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--blue);animation:ping 1.8s ease-out infinite}
+@keyframes ping{from{transform:scale(.5);opacity:1}to{transform:scale(1.6);opacity:0}}
+.big{font-size:clamp(3rem,7vw,4.6rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.big.hid{font-size:1.55rem;line-height:1.2}
+.tm{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;background:var(--plum);color:#fff;border-radius:16px;padding:1rem 1.2rem}
+:root:not([data-theme="light"]) .tm{background:var(--surface-2);color:var(--plum)}
+.tm .day{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tm input[type=range]{accent-color:var(--blue)}
+.tm .btn{background:var(--blue);border-color:var(--blue);color:#fff}
+.chart{width:100%;height:190px;display:block}
+.split{display:grid;grid-template-columns:420px 1fr;gap:1.4rem;align-items:start}
+.split .side-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.pipe .stage{border-radius:14px;padding:1rem;background:var(--wash);border:1px solid var(--line)}
+.pipe .stage.bridge{background:var(--blue-soft);border-color:transparent}
+.pipe .stage h4{margin-bottom:.35rem}
+.fab{position:fixed;right:calc(1.2rem + env(safe-area-inset-right,0px));bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));z-index:8}
+.fab>.btn{box-shadow:0 6px 18px rgba(67,40,68,.25)}
+.sim{position:fixed;right:calc(1.2rem + env(safe-area-inset-right,0px));bottom:calc(4.8rem + env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 2.4rem));max-height:70vh;overflow:auto;z-index:8;background:var(--surface);border:1px solid var(--line-strong);border-radius:16px;padding:1rem;box-shadow:0 10px 30px rgba(67,40,68,.2)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--plum);color:var(--bg);padding:.7rem 1.1rem;border-radius:10px;max-width:90vw;z-index:20;font-size:.95rem}
+@media (max-width:1000px){.split{grid-template-columns:1fr}.pipe{grid-template-columns:1fr 1fr}}
+@media (max-width:820px){.hero,.g2,.live{grid-template-columns:1fr}.g3,.g4{grid-template-columns:1fr 1fr}.hbar{grid-template-columns:7.5rem 1fr 3rem}.tm{grid-template-columns:1fr}.brand img{height:32px}}
+@media (max-width:520px){.g3,.g4,.pipe{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.dot.on::after{animation:none}.meter>span{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<button class="brand" data-go="overview" aria-label="SE Bridge by SE Health, home"><img src="data:image/png;base64,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" alt="SE Health"><span class="divider" aria-hidden="true"></span><span id="brandmark"></span></button>
+<nav aria-label="Main" id="nav"></nav>
+</div></header>
+<main id="app"></main>
+<footer><span id="leaf"></span> Made in Canada for the SE Health Respite for All challenge. All people, visits and numbers are synthetic.</footer>
+<div class="fab"><button class="btn" data-act="toggleSim" aria-expanded="false" id="fabBtn">Provider simulator</button></div>
+<div id="simPanel"></div>
+<div id="toast" class="toast" hidden role="status"></div>
+<script>
+// ---------- Constants and assumptions ----------
+const RATE_DEFAULT=38, CAP=10, MIN=5, DAYCOST=300, POOL_DEFAULT=300;
+// Rough minutes per request, used to warn when a to-do list won't fit the hours booked.
+const TASK_MIN={'Light housekeeping':60,'Laundry':45,'Prepare a meal':45,'Grocery run':60,'Pick up a prescription':30,'Companionship and conversation':60,'Go along to an appointment':90,'Help moving around the home':30,'Reminders for the day':15,'Garden or snow clearing':60};
+const taskMin=t=>TASK_MIN[t]||30;
+// Requests a PSW usually can't take on. Flagged to the employee and the provider, never to HR.
+const OUT_OF_SCOPE=/\b(mov(e|ing)\b.{0,30}\b(out|house|apartment|condo|furniture|boxes|couch|sofa)|moving day|furniture|heavy lifting|pack(ing)? boxes|truck|renovat\w*|paint(ing)? (the )?(walls?|house|room)|roof|repair\w*|plumbing|electrical|babysit\w*|pet sitting|dog walk\w*|walk\w* (my |the )?dogs?|party|airport|business|my work|cash|banking|lawyer|injection|medication change)\b/i;
+const flagged=t=>OUT_OF_SCOPE.test(t);
+const normDept=d=>{const c=String(d||'').trim().replace(/\s+/g,' ').toLowerCase();return c?c.replace(/(^|[\s\-\/])([a-z])/g,(m,a,b)=>a+b.toUpperCase()):'Not specified'};
+const SERVICES=[
+ {id:'household',name:'Household help',d:'Cleaning, laundry, meals'},
+ {id:'companion',name:'Companionship',d:'Visits, conversation, outings'},
+ {id:'personal',name:'Personal care',d:'Help washing, dressing, moving'},
+ {id:'errands',name:'Errands and outings',d:'Groceries, prescriptions, rides'},
+ {id:'rest',name:'Respite so family can rest',d:'Someone stays while you take a break'}];
+const SVC_W={household:.47,companion:.30,personal:.18,errands:.03,rest:.02};
+const TASKS=['Light housekeeping','Laundry','Prepare a meal','Grocery run','Pick up a prescription','Companionship and conversation','Go along to an appointment','Help moving around the home','Reminders for the day','Garden or snow clearing'];
+const ROSTER={'SE Health':['Grace','Amina','Daniel','Mei'],'Northway Home Support':['Luis','Priya','Samuel','Tomás']};
+const TIMES=Array.from({length:27},(_,i)=>`${String(7+Math.floor(i/2)).padStart(2,'0')}:${i%2?'30':'00'}`);
+const ICON={household:'M4 11 12 4l8 7v9h-5v-6H9v6H4z',companion:'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z',personal:'M12 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm-6 16c0-4 3-6 6-6s6 2 6 6',errands:'M5 7h14l-1.5 10h-11zM9 7V5a3 3 0 0 1 6 0v2',rest:'M12 3a7 7 0 1 0 8 8A6 6 0 0 1 12 3z'};
+
+// ---------- State ----------
+const S={view:'overview',pulseTab:'setup',fileName:'',paced:true,pendingMe:null,contact:'personal',hr:null,hrStep:'login',hrVerify:null,setup:{agreement:false,start:'',poolSet:false,invites:false,managers:false,show:''},rate:RATE_DEFAULT,pool:POOL_DEFAULT,
+ est:{headcount:100,uptake:25,high:45,avg:7},
+ csv:'',preview:null,upload:null,staff:[],
+ me:null,attest:false,step:'signin',
+ wiz:null,bookings:[],showReview:false,review:{stars:0,saved:null},
+ others:[],extraWait:0,day:1,playing:null,growth:10,admin:150,dayCost:DAYCOST,verify:null,chat:null,threads:{},scopeOpen:false,
+ log:[],simOpen:false,err:{}};
+let KEY=null;
+
+// ---------- Helpers ----------
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+Math.round(n).toLocaleString('en-CA');
+const aboutRange=(a,b)=>{const x=Math.round(a).toLocaleString('en-CA'),y=Math.round(b).toLocaleString('en-CA');return x===y?`about ${x}`:`about ${x} to ${y}`};
+const num=n=>Math.round(n).toLocaleString('en-CA');
+const sup=n=>n<MIN?null:n;
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const at=(date,time)=>new Date(`${date}T${time}:00`);
+const fmtTime=t=>{const[h,m]=t.split(':').map(Number);return`${h%12||12}:${pad(m)} ${h<12?'a.m.':'p.m.'}`};
+const fmtClock=d=>fmtTime(`${pad(d.getHours())}:${pad(d.getMinutes())}`);
+const fmtDate=s=>new Date(s+'T12:00').toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'});
+const svc=id=>SERVICES.find(s=>s.id===id);
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,3400)}
+function log(emp,bridge,hr){S.log.unshift({emp,bridge,hr,t:fmtClock(new Date())});S.log=S.log.slice(0,10)}
+async function initKey(){try{KEY=await crypto.subtle.generateKey({name:'HMAC',hash:'SHA-256'},false,['sign'])}catch(e){KEY=null}}
+async function tokenFor(v){const data=new TextEncoder().encode(String(v).trim().toLowerCase());if(KEY){const sig=await crypto.subtle.sign('HMAC',KEY,data);return[...new Uint8Array(sig)].slice(0,8).map(b=>b.toString(16).padStart(2,'0')).join('')}let x=2166136261;for(const b of data){x^=b;x=Math.imul(x,16777619)>>>0}return x.toString(16).padStart(16,'0')}
+
+// ---------- Logos ----------
+const LEAF='M12 1 L13.4 4.2 L15.2 3.4 L14.6 8.2 L17.6 5.6 L18.2 7.4 L21.4 6.8 L20.4 10 L22 11 L17.4 14.8 L18 16.6 L13 15.8 L12.6 15.9 L12.6 22.5 L11.4 22.5 L11.4 15.9 L11 15.8 L6 16.6 L6.6 14.8 L2 11 L3.6 10 L2.6 6.8 L5.8 7.4 L6.4 5.6 L9.4 8.2 L8.8 3.4 L10.6 4.2 Z';
+const arcY=x=>{const t=(x-4)/36;return(32-56*t*(1-t)).toFixed(1)};
+function mark(kind,size){let m;
+ if(kind==='shield')m=`<path d="M22 4 L38 10 V22 C38 32 31 39 22 43 C13 39 6 32 6 22 V10 Z" fill="var(--blue)"/><path d="M22 30 C15 25 13 22 13 19 C13 16.5 15 15 17 15 C19 15 21 16.3 22 18 C23 16.3 25 15 27 15 C29 15 31 16.5 31 19 C31 22 29 25 22 30 Z" fill="#fff"/>`;
+ else if(kind==='pulse')m=`<circle cx="22" cy="22" r="18" fill="var(--blue)"/><polyline points="8,23 14,23 17,15 22,31 26,18 29,23 36,23" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+ else m=[10,16,22,28,34].map(x=>`<line x1="${x}" y1="${arcY(x)}" x2="${x}" y2="33" stroke="var(--blue)" stroke-width="1.6"/>`).join('')+`<path d="M4 32 Q22 4 40 32" fill="none" stroke="var(--blue)" stroke-width="4.5" stroke-linecap="round"/><path d="M2 33.5 H42" stroke="var(--plum)" stroke-width="4" stroke-linecap="round"/>`;
+ return`<svg width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true">${m}<g transform="translate(30 29) scale(0.75)"><path d="${LEAF}" fill="var(--red)" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke"/></g></svg>`}
+const logo=(kind,size=34)=>`<span class="product-logo">${mark(kind,size)}<span class="wordmark" style="font-size:${(size*.56).toFixed(1)}px"><b>SE</b> ${{bridge:'Bridge',pulse:'Pulse',shield:'Shield'}[kind]}</span></span>`;
+const leaf=s=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><path d="${LEAF}" fill="var(--red)"/></svg>`;
+const icon=id=>`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICON[id]}"/></svg>`;
+
+// ---------- Sample staff list (synthetic) ----------
+const FIRST=['amara','ben','chen','dalia','ethan','fatima','gabriel','hana','ivan','jasmin','kwame','leah','mateo','nadia','omar','priya','quinn','rosa','sanjay','tess'];
+const LAST=['singh','tremblay','nguyen','okafor','roy','martin','li','patel','gagnon','hassan'];
+function sampleCSV(){const plan=[['Nursing',40,4],['Personal support',34,6],['Administration',18,1],['Facilities',12,1],['Finance',3,0]];const r=['email,department'];let i=0;
+ for(const[d,n,casual]of plan)for(let k=0;k<n;k++){if(k>=casual)r.push(`${FIRST[i%20]}.${LAST[(i*7)%10]}${i}@maplecare.ca,${d}`);i++}
+ r.push('not-an-email,Nursing,yes');r.push(r[1]);return r.join('\n')}
+const DEMO_EMAIL='ethan.gagnon4@maplecare.ca';
+
+// ---------- Booking rules ----------
+const postalOk=p=>/^[ABCEGHJ-NPRSTVXY]\d[A-Z] ?\d[A-Z]\d$/i.test(p.trim());
+function coverage(p){const s=p.toUpperCase().replace(/\s/g,'');const rural=s[1]==='0';return{postal:s.slice(0,3)+' '+s.slice(3),rural,provider:rural?'Northway Home Support':'SE Health',noticeH:rural?48:3}}
+function windowFor(rural){const now=new Date();const min=new Date(now.getTime()+(rural?48:2.5)*3600e3);const max=new Date(now);max.setDate(max.getDate()+7);max.setHours(20,0,0,0);return{min,max}}
+function timesFor(date,rural){const{min,max}=windowFor(rural);return TIMES.filter(t=>{const d=at(date,t);return d>=min&&d<=max})}
+function datesFor(rural){const out=[];const d=new Date();for(let i=0;i<=7;i++){const x=new Date(d);x.setDate(d.getDate()+i);const s=ymd(x);if(timesFor(s,rural).length)out.push(s)}return out}
+const changeDeadline=b=>new Date(at(b.date,b.time).getTime()-24*3600e3);
+const canChange=b=>((b.status==='booked'&&!b.asap)||b.status==='pending')&&new Date()<at(b.date,b.time);
+const canCancel=b=>(b.status==='booked'||b.status==='pending')&&(b.asap||new Date()<at(b.date,b.time));
+// As soon as possible: about 2 hours to arrange a PSW, within visiting hours (7 a.m. to 8 p.m.).
+function asapSlot(){const d=new Date(Date.now()+2*3600e3);d.setMinutes(d.getMinutes()<=30?30:60,0,0);
+ if(d.getHours()<7||(d.getHours()===7&&d.getMinutes()===0)){d.setHours(8,0,0,0)}
+ if(d.getHours()>20||(d.getHours()===20&&d.getMinutes()>0)){d.setDate(d.getDate()+1);d.setHours(8,0,0,0)}
+ return{date:ymd(d),time:`${pad(d.getHours())}:${pad(d.getMinutes())}`}}
+// The pool can be released in three monthly parts, so early demand can't use it all.
+const pacedCapAt=day=>S.paced?S.pool*Math.min(1,Math.ceil(Math.max(1,day)/30)/3):S.pool;
+const pilotMonth=()=>Math.min(3,Math.ceil(Math.max(1,S.day)/30));
+const myHours=()=>S.bookings.filter(b=>b.status!=='cancelled'&&b.status!=='declined').reduce((a,b)=>a+b.hours,0);
+
+// ---------- Synthetic pilot model for the time machine ----------
+function synth(day){const E=S.staff.length;if(!E)return null;const d=Math.max(0,Math.min(90,day));
+ // Synthetic pilot that does a bit better than the expected estimate (1.5x), so demand can outgrow the pool.
+ const finalUsers=E*.325*S.est.uptake/100*1.5;const ease=(k)=>(1-Math.exp(-d/k))/(1-Math.exp(-90/k));
+ const enrolled=Math.round(finalUsers*1.3*ease(20));
+ const users=Math.round(finalUsers*ease(22)*Math.min(1,d/8));
+ const demand=finalUsers*S.est.avg*Math.pow(d/90,1.25);
+ const cap=pacedCapAt(d),delivered=Math.round(Math.min(demand,cap*.97));
+ const committed=Math.round(Math.min(cap,delivered*1.08+(d>3?2:0)));
+ const poolWait=Math.max(0,Math.round((demand*1.08-cap)/3));
+ const visits=Math.round(delivered/2.8);
+ const answered=Math.round(visits*.78),saved=Math.round(visits*.5),reviews=Math.round(visits*.7);
+ const rural=Math.round(visits*.11);
+ return{E,enrolled,users,delivered,committed,poolWait,visits,answered,saved,reviews,ratingSum:reviews*4.6,rural}}
+function totals(){const s=synth(S.day);if(!s)return null;const mine=S.bookings.filter(b=>b.status!=='cancelled'&&b.status!=='declined');const done=mine.filter(b=>b.status==='done');
+ const me=S.me&&mine.length?1:0;
+ const oth=S.others,othDone=oth.filter(o=>o.done),othH=oth.reduce((a,o)=>a+o.hours,0),othDoneH=othDone.reduce((a,o)=>a+o.hours,0);
+ const t={...s,enrolled:s.enrolled+(S.me&&S.attest?1:0)+oth.length,users:s.users+me+oth.length,committed:Math.min(S.pool,s.committed+mine.reduce((a,b)=>a+b.hours,0)+othH),
+  delivered:s.delivered+done.reduce((a,b)=>a+b.hours,0)+othDoneH,visits:s.visits+done.length+othDone.length,
+  answered:s.answered+done.filter(b=>b.saved&&b.saved!=='skip').length+othDone.filter(o=>o.saved!=='skip').length,saved:s.saved+done.filter(b=>b.saved==='yes').length+othDone.filter(o=>o.saved==='yes').length,
+  reviews:s.reviews+done.filter(b=>b.stars).length+othDone.length,ratingSum:s.ratingSum+done.reduce((a,b)=>a+(b.stars||0),0)+othDone.reduce((a,o)=>a+o.stars,0),
+  rural:s.rural+done.filter(b=>b.rural).length,poolWait:s.poolWait+S.extraWait};
+ t.active=oth.filter(o=>!o.done).length+S.bookings.filter(b=>b.status==='in_progress').length;
+ t.byCat=Object.fromEntries(SERVICES.map(x=>[x.id,Math.round(s.delivered*SVC_W[x.id])+mine.filter(b=>b.svc===x.id).reduce((a,b)=>a+b.hours,0)+oth.filter(o=>o.svc===x.id).reduce((a,o)=>a+o.hours,0)]));
+ const depts={};S.staff.forEach(p=>depts[p.dept]=(depts[p.dept]||0)+1);
+ t.depts=Object.entries(depts).map(([dept,n])=>({dept,n,users:Math.round(t.users*n/s.E*(dept==='Personal support'?1.15:dept==='Administration'?.8:1))}));
+ return t}
+
+// ---------- Rendering ----------
+const NAV=[['overview','How it works'],['pulse','SE Pulse for HR'],['shield','SE Shield for staff'],['split','Split screen'],['security','Data and security']];
+function render(){
+ $('#nav').innerHTML=NAV.map(([id,l])=>`<button data-go="${id}" ${S.view===id?'aria-current="page"':''}>${l}</button>`).join('');
+ $('#app').innerHTML=({overview,pulse,shield:shieldPage,split,security})[S.view]();
+ $('#simPanel').innerHTML=S.simOpen?simPanel():'';
+ $('#fabBtn').setAttribute('aria-expanded',S.simOpen)}
+
+function overview(){return`<section class="hero"><div>
+<h1>Respite for caregivers, without anyone having to say who they are.</h1>
+<p class="lead">SE Bridge, from SE Health, lets employers offer paid PSW respite to staff who look after family. HR gets clear costs, a two-minute setup and proof the program works. Employees book privately. HR never learns who.</p>
+<div class="btns"><button class="btn" data-go="pulse">Start with SE Pulse for HR</button><button class="btn ghost" data-go="split">Open split screen</button></div></div>
+<div class="panel"><h3>Demo path</h3><ol class="steps-list" style="margin-top:.6rem">
+<li><span>HR signs in and works through a short setup checklist</span></li>
+<li><span>Upload the staff list and watch emails become tokens</span></li>
+<li><span>Estimate the cost from the number of staff uploaded</span></li>
+<li><span>An employee signs in and books a PSW</span></li>
+<li><span>Split screen: what the employee sees vs what HR sees</span></li>
+<li><span>Time machine: fast-forward the 3-month pilot</span></li>
+<li><span>Monthly cost after the pilot, from real usage</span></li></ol></div></section>
+<section style="margin-top:1.5rem"><h2 class="rule">How SE Bridge meets each goal</h2><p class="muted" style="margin:.8rem 0 1rem">The five outcomes in SE Health’s challenge brief, and where to see each one in the demo.</p>
+<div class="panel tablewrap"><table><thead><tr><th>Goal</th><th>How SE Bridge does it</th><th>Where in the demo</th></tr></thead><tbody>
+<tr><td><b>Increase employer adoption</b></td><td>Removes the four biggest blockers: unknown cost, HR workload, privacy risk and no exit plan.</td><td>SE Pulse, all four tabs</td></tr>
+<tr><td><b>Enable practical pilots</b></td><td>Three-column staff upload, a fixed hour pool that can’t overspend, and a 90-day pilot with a decision at the end.</td><td>Add staff, Time machine</td></tr>
+<tr><td><b>Demonstrate measurable value</b></td><td>Uptake, utilization, hours delivered, cost, ratings and sick days avoided, tracked from day 1.</td><td>Dashboard, After the pilot</td></tr>
+<tr><td><b>Protect employee trust</b></td><td>No proof of caregiving, no names stored, groups under 5 hidden, care details stay with the provider.</td><td>Split screen, Data and security</td></tr>
+<tr><td><b>Deliver innovative solutions</b></td><td>Keyed tokens instead of names, live privacy-safe counts, and a pilot time machine to forecast cost.</td><td>Everywhere</td></tr>
+</tbody></table></div></section>`}
+
+// ----- SE Pulse -----
+const HR_ACCOUNTS={'hr@maplecare.ca':'Maple-HR-2026'};
+function hrLogin(){const v=S.hrVerify;return`<div class="panel" style="max-width:460px;margin:1rem auto">
+<div style="text-align:center">${logo('pulse',40)}</div>
+${S.hrStep==='login'?`<h2 style="margin-top:1rem">HR sign in</h2><p class="small muted">Your account was set up by SE Health when Maple Community Care joined the pilot. Only invited HR administrators can sign in here.</p>
+<label for="hre">Work email</label><input id="hre" type="email" autocomplete="username" placeholder="you@maplecare.ca">
+<label for="hrp">Password</label><input id="hrp" type="password" autocomplete="current-password">
+${S.err.hr?`<p class="err">${esc(S.err.hr)}</p>`:''}
+<div class="btns"><button class="btn" data-act="hrLogin">Continue</button><button class="btn sm ghost" data-act="hrDemo">Use demo HR account</button></div>
+<p class="hint" style="margin-top:1rem">Organizations that use Microsoft or Google sign-in can use that instead. Employees don’t sign in here; they use SE Shield.</p>`
+:`<h2 style="margin-top:1rem">Check your email</h2><p class="small muted">We sent a 6-digit code to <b>${esc(v.masked)}</b>. HR accounts always need a code, because they manage the program.</p>
+<div class="soft small" style="margin-top:.7rem"><b>Demo inbox</b><br>Your SE Pulse code is <b style="font-size:1.2rem;letter-spacing:.12em">${v.code}</b></div>
+<label for="hrc">6-digit code</label><input id="hrc" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+${S.err.hr?`<p class="err">${esc(S.err.hr)}</p>`:''}
+<div class="btns"><button class="btn" data-act="hrVerify">Verify</button><button class="link small" data-act="hrBack">Use a different account</button></div>`}</div>`}
+function setupTab(){const st=S.setup,n=S.staff.length;const end=st.start?(()=>{const d=new Date(st.start+'T12:00');d.setDate(d.getDate()+89);return ymd(d)})():'';
+ const items=[
+  {t:'Pilot agreement signed',d:st.agreement?'Signed by SE Health and Maple Community Care.':'Between SE Health and your organization: dates, hour pool, cost and privacy terms.',done:st.agreement,act:st.agreement?'':`<button class="btn sm" data-setup="agreement">Mark as signed</button>`},
+  {t:'Pilot dates set',d:st.start?`${fmtDate(st.start)} to ${fmtDate(end)}, 90 days.`:'Choose a start date. The pilot runs 90 days.',done:!!st.start,act:`<input type="date" data-pstart value="${st.start}" aria-label="Pilot start date" style="padding:.4rem .5rem;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface)">`},
+  {t:'Staff list uploaded',d:n?`${n} staff on the list. Everyone on it can use respite.`:'A CSV file with email and department. Including everyone is recommended.',done:n>0,act:`<button class="btn sm ${n?'ghost':''}" data-tab="staff">${n?'Add more':'Upload'}</button>`},
+  {t:'Hour pool confirmed',d:`${S.pool} hours, ${money(S.pool*S.rate)} maximum. Spending can’t go over.`,done:st.poolSet,act:`<button class="btn sm ${st.poolSet?'ghost':''}" data-tab="estimate" ${n?'':'disabled'}>${st.poolSet?'Review':'Set from estimate'}</button>`},
+  {t:'Invitations sent',d:st.invites?`The same message went to all ${n} staff, plus a poster with an access code for staff without email.`:'Everyone gets the same message, so no one is singled out.',done:st.invites,act:`<button class="btn sm ${st.invites?'ghost':''}" data-setup="showInvite" ${n?'':'disabled'}>${st.invites?'View':'Preview and send'}</button>`},
+  {t:'Managers briefed',d:'A short note: managers won’t see who uses respite, and shouldn’t ask.',done:st.managers,act:`<button class="btn sm ${st.managers?'ghost':''}" data-setup="showBrief">${st.managers?'View':'Preview and send'}</button>`}];
+ const done=items.filter(i=>i.done).length;
+ const box=(title,subject,body,act,sent)=>`<div class="panel" style="margin-top:1.1rem"><h3>${title}</h3>${subject?`<p class="small"><b>Subject:</b> ${subject}</p>`:''}<div class="soft small" style="white-space:pre-line">${body}</div><div class="btns">${sent?'<span class="small muted">Sent.</span>':`<button class="btn" data-setup="${act}">Send</button>`}<button class="btn ghost sm" data-setup="close">Close</button></div></div>`;
+ return`<div class="panel"><div class="page-head" style="margin:0"><div class="row"><h3>Get ready to launch</h3><span class="small muted">${done} of ${items.length} done</span></div></div>
+<div class="meter"><span style="width:${done/items.length*100}%"></span></div>
+<p class="small muted">Most organizations finish this in under an hour. Each step can be done in any order.</p>
+<div style="margin-top:.6rem">${items.map(i=>`<div style="display:grid;grid-template-columns:2rem 1fr auto;gap:.8rem;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--line)">
+<span aria-hidden="true" style="width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;font-weight:700;${i.done?'background:var(--blue-ink);color:var(--on-blue)':'border:2px solid var(--line-strong)'}">${i.done?'✓':''}</span>
+<div><b>${i.t}</b><span class="sr-only">${i.done?' (done)':' (to do)'}</span><div class="small muted">${i.d}</div></div><div>${i.act}</div></div>`).join('')}</div>
+${done===items.length?`<div class="ok"><b>Ready to launch.</b> Staff can start booking from ${st.start?fmtDate(st.start):'the start date'}.</div>`:''}</div>
+${st.show==='invite'?box('Invitation to all staff','Free, private help at home if you look after someone',`Maple Community Care is trying something new with SE Health.
+
+If you help look after someone, such as a parent, partner, child, friend or neighbour, you can get up to 10 hours of free help at home from a personal support worker over the next 3 months.
+
+It’s private. Maple will never see who uses it, and you don’t need to prove anything.
+
+To start, open SE Shield and sign in with your work email.
+No work email? Use the code MAPLE-2026, also on the staff-room poster.
+
+This is a 3-month pilot, not a permanent benefit, and it doesn’t replace sick days or other benefits.`,'sendInvite',st.invites):''}
+${st.show==='brief'?box('Note to managers','Respite pilot: what managers need to know',`Maple is piloting free respite care with SE Health for staff who look after someone.
+
+• You won’t see who uses it, and HR only sees totals.
+• Please don’t ask staff whether they’re using it.
+• If someone mentions caregiving, you can point them to SE Shield.
+• Questions go to HR or SE Health, not to individual staff.`,'sendBrief',st.managers):''}`}
+function pulse(){if(!S.hr)return hrLogin();const tabs=[['setup','1. Set up'],['staff','2. Upload staff list'],['estimate','3. Estimate cost'],['dash','4. Dashboard'],['after','5. After the pilot'],['why','Why respite']];
+ return`<div class="page-head"><div class="row"><h2 class="rule">${logo('pulse',40)}</h2><div class="small" style="text-align:right;flex:0 1 auto"><div><span class="tag live" style="display:inline-block;width:auto">HR administrator</span> <b>${esc(S.hr.email)}</b></div><div class="muted">Maple Community Care, synthetic employer · <button class="link small" data-act="hrSignout">Sign out</button></div></div></div></div>
+<div class="subtabs" role="tablist">${tabs.map(([id,l])=>`<button role="tab" aria-selected="${S.pulseTab===id}" data-tab="${id}">${l}</button>`).join('')}</div>
+${({setup:setupTab,estimate:estimateTab,staff:staffTab,dash:dashTab,after:afterTab,why:whyTab})[S.pulseTab]()}`}
+function whyTab(){const n=S.staff.length,mid=n?(()=>{S.est.headcount=n;return estCalc().mid})():null;
+ return`<div class="panel"><div class="page-head" style="margin:0"><div class="row"><h3>Why respite, why now</h3><button class="btn sm ghost" data-act="print">Print for leadership</button></div></div>
+<p class="small muted">Most employers already offer flexible hours and an assistance program. Here’s what respite adds.</p>
+<div class="tablewrap" style="margin-top:.6rem"><table><thead><tr><th>Support</th><th>Helps with</th><th>Doesn’t do</th></tr></thead><tbody>
+<tr><td><b>Flexible or hybrid hours</b></td><td>Fitting work around care</td><td>Lighten the care itself. SE Health calls this the “flex-work trap.”</td></tr>
+<tr><td><b>Employee assistance program</b></td><td>Counselling and advice</td><td>Give hands-on help at home</td></tr>
+<tr><td><b>Sick days, vacation, compassionate leave</b></td><td>Time off in a crisis</td><td>Last, because caregivers use them up covering care</td></tr>
+<tr><td><b>Respite through SE Bridge</b></td><td>Hands-on help at home, so caregivers can rest or work</td><td>Replace other benefits. It’s a time-limited pilot of up to 10 hours each.</td></tr>
+</tbody></table></div>
+${n?`<div class="g3" style="margin-top:1rem">${stat(n,'Staff on your list')}${stat(aboutRange(n*.30,n*.35).replace('about ',''),'Likely caregivers (SE Health’s 30–35% proxy)')}${stat(money(mid.cost/3),'Expected care cost per month')}</div>`:`<p class="small muted" style="margin-top:1rem">Upload your staff list to add your own numbers here.</p>`}
+<div class="soft small" style="margin-top:1rem"><b>The obligation behind it:</b> employers have a duty to accommodate caregiving under human rights law (Canadian Human Rights Commission guide, 2026; rules vary by province). Respite is voluntary and goes beyond that duty, which makes it a visible way to show support.</div>
+<p class="tiny muted" style="margin-top:.8rem">Sources: SE Health, Respite for All employer pain points (Phase 1 “flex-work trap” finding); Maple (2025), as cited by SE Health, on caregivers using sick days and vacation; Canadian Human Rights Commission, 2026 guide, as cited by SE Health.</p></div>`}
+
+function estCalc(){const e=S.est,h=Math.max(0,+e.headcount||0);const sc=(share,up,hrs)=>{const cg=h*share,p=cg*up/100,hours=p*Math.min(hrs,CAP);return{cg,p,hours,cost:hours*S.rate,ppm:h?hours*S.rate/h/3:0}};
+ return{low:sc(.30,e.uptake*.6,e.avg*.7),mid:sc(.325,e.uptake,e.avg),high:sc(.35,e.high,CAP)}}
+function estimateTab(){const e=S.est;if(!S.staff.length)return`<div class="panel"><h3>Upload your staff list first</h3><p class="muted">The cost estimate is based on how many benefits-eligible staff are on your list.</p><div class="btns"><button class="btn" data-tab="staff">Upload staff list</button></div></div>`;
+ e.headcount=S.staff.length;return`<div class="g2"><div class="panel"><h3>Your numbers</h3><p class="small muted">Everything is an estimate shown as a range.</p>
+<div class="stat" style="margin-top:.6rem"><div class="n">${S.staff.length}</div><div class="l">Staff on your uploaded list</div></div>
+<label for="e-u">Caregivers likely to use it: <span id="v-u">${e.uptake}</span>%</label><input id="e-u" type="range" min="5" max="80" value="${e.uptake}" data-est="uptake">
+<label for="e-hi">High-demand scenario: <span id="v-hi">${e.high}</span>%</label><input id="e-hi" type="range" min="10" max="100" value="${e.high}" data-est="high">
+<label for="e-a">Average hours each: <span id="v-a">${e.avg}</span> of 10</label><input id="e-a" type="range" min="1" max="10" value="${e.avg}" data-est="avg">
+<label for="e-r">Provider rate per hour ($)</label><input id="e-r" type="number" min="1" value="${S.rate}" data-rate>
+<p class="hint">Caregiver share uses SE Health’s proxy of 30–35% of a workforce. It’s an estimate, not a count.</p></div>
+<div class="panel"><div id="estOut">${estOut()}</div></div></div>`}
+function estOut(){const r=estCalc();const card=(t,x,c)=>`<div class="scen ${c}"><div class="small">${t}</div><div class="n">${money(x.cost/3)}</div><div class="small">per month</div><div class="small muted" style="margin-top:.4rem">${money(x.cost)} for the 3-month pilot<br>${num(x.p)} people, ${num(x.hours)} hours<br>${money(x.ppm)} per employee per month</div></div>`;
+ return`<h3>Estimated cost of care</h3><p class="small muted">For ${S.staff.length} staff, ${aboutRange(r.low.cg,r.high.cg)} are likely caregivers. Monthly figures are the 3-month pilot total divided by 3.</p>
+<div class="g3" style="margin-top:.7rem">${card('Low',r.low,'')}${card('Expected',r.mid,'mid')}${card('High demand',r.high,'')}</div>
+<div class="soft" style="margin-top:1rem"><b>Hour pool for the pilot: ${S.pool} hours</b> <span class="muted small">(${money(S.pool*S.rate)} maximum)</span><p class="small muted">Bookings pause and a waitlist opens when the pool is used, so spending never goes over.</p>
+<label class="check" style="margin-top:.4rem"><input type="checkbox" data-paced ${S.paced?'checked':''}> <span>Release the pool in three monthly parts (recommended), so early demand can’t use it all in the first weeks. That’s about ${num(S.pool/3)} hours a month.</span></label>
+<div class="btns" style="margin-top:.4rem"><button class="btn sm" data-act="useMid">Set pool to expected (${num(Math.max(1,r.mid.hours))} h)</button><button class="btn sm ghost" data-act="useHigh">Set pool to high demand</button></div></div>
+<div class="btns"><button class="btn" data-go="shield">Next: employee signs in</button></div>`}
+
+function staffTab(){const p=S.preview,u=S.upload;return`<div class="g2"><div class="panel"><h3>${S.staff.length?'Add more staff':'Upload your staff list'}</h3>
+<p class="small muted">Start here. Upload a CSV file with two columns, <b>email</b> and <b>department</b>. No names, health, salary or caregiving details. The cost estimate is based on this list.</p>
+<div class="ok small"><b>We recommend including everyone,</b> including part-time and shift staff. In SE Health’s Phase 1, strict eligibility rules made people rule themselves out, and removing the income cap improved uptake.</div>
+${S.staff.length?`<div class="ok small">Your list has <b>${S.staff.length} staff</b>. New uploads are added to it. People already on the list are skipped automatically.</div>`:''}
+<label for="csvfile">Staff list (CSV file)</label><input id="csvfile" type="file" accept=".csv,text/csv" data-csvfile style="width:100%;padding:.55rem;border:1px dashed var(--line-strong);border-radius:10px;background:var(--wash)">
+${S.fileName?`<p class="hint">File: ${esc(S.fileName)}</p>`:''}
+<div class="btns">${S.staff.length?`<button class="btn sm ghost" data-act="newHires">Use sample new-hires file</button>`:`<button class="btn sm ghost" data-act="sample">Use sample file</button>`}</div>
+${S.err.csv?`<p class="err">${esc(S.err.csv)}</p>`:''}
+<details class="small" style="margin-top:1rem"><summary>What the file should look like</summary><pre style="background:var(--surface-2);padding:.7rem;border-radius:8px;overflow-x:auto;margin:.5rem 0">email,department
+amara.singh@yourorg.ca,Nursing
+ben.tremblay@yourorg.ca,Facilities</pre><p style="margin:0">Header names can be in any case. If your organization limits eligibility, add an optional third column, <b>benefits_eligible</b> (yes or no). Rows marked no are left out.</p></details>
+<p class="hint" style="margin-top:1rem">Staff without work email can join with a code from a staff-room poster instead.</p></div>
+<div class="panel">${u?uploadDone():p?previewView():`<h3>How de-identification works</h3><ol class="steps-list" style="margin-top:.5rem"><li><span>Rows that aren’t benefits-eligible, aren’t valid emails or are duplicates are skipped.</span></li><li><span>Each email is turned into a keyed token (HMAC-SHA-256). The same email always gives the same token, but the token can’t be turned back into an email.</span></li><li><span>Only the token and department are kept. Emails are discarded.</span></li><li><span>Departments under 5 people are merged into “Other”.</span></li></ol>`}</div></div>`}
+function previewView(){const p=S.preview;if(!p.ready.length&&p.already)return`<h3>Nothing new to add</h3><p class="muted">All ${p.already} eligible people in this file are already on your list.</p>`;return`<h3>Check before adding</h3>
+<div class="${p.hasElig?'g4':'g3'}" style="margin-top:.6rem"><div class="stat"><div class="n">${p.ready.length}</div><div class="l">New, ready to add</div></div><div class="stat"><div class="n">${p.already}</div><div class="l">Already on the list</div></div>${p.hasElig?`<div class="stat"><div class="n">${p.notEligible}</div><div class="l">Not benefits-eligible</div></div>`:''}<div class="stat"><div class="n">${p.invalid+p.dup}</div><div class="l">Invalid or duplicate</div></div></div>
+<p class="small" style="margin-top:1rem"><b>What happens to each row</b></p>
+<div class="tablewrap"><table><thead><tr><th>You uploaded</th><th>SE Bridge keeps</th></tr></thead><tbody>
+${p.ready.slice(0,5).map(r=>`<tr><td><span class="muted">${esc(r.email)}</span><br><span class="tiny">${esc(r.dept)}</span></td><td><code>${r.token}</code><br><span class="tiny">${esc(r.deptOut)}</span></td></tr>`).join('')}
+</tbody></table></div><p class="hint">Showing 5 of ${p.ready.length}. ${p.merged.length?`${p.merged.join(', ')} will be merged into “Other” (under 5 people).`:''}</p>
+<div class="btns">${p.ready.length?`<button class="btn" data-act="add">Add ${p.ready.length} staff and discard emails</button>`:'<p class="small muted">Everyone in this file is already on the list.</p>'}</div>`}
+function uploadDone(){const u=S.upload,d={};S.staff.forEach(s=>d[s.dept]=(d[s.dept]||0)+1);return`<div class="ok"><b>${u.added} staff added. Your list now has ${S.staff.length}.</b> ${u.added} identical invitations queued, so no one is singled out.</div>
+<div class="g2" style="margin-top:1rem"><div class="soft"><b>Stored</b><p class="small">A token and a department for each person.</p></div><div class="soft"><b>Not stored</b><p class="small">Emails, names, or who is a caregiver.</p></div></div>
+<p class="small" style="margin-top:1rem"><b>What HR can see:</b> headcount by department.</p>
+${Object.entries(d).map(([k,n])=>`<div class="hbar"><span>${esc(k)}</span><div class="meter"><span style="width:${n/S.staff.length*100}%"></span></div><b>${n}</b></div>`).join('')}
+<div class="btns"><button class="btn" data-tab="estimate">Next: estimate the cost</button><button class="btn ghost sm" data-act="reupload">Add more staff</button></div>`}
+
+function stat(n,l,hidden){return`<div class="stat"><div class="n ${hidden?'hid':''}">${hidden?'Fewer than 5':n}</div><div class="l">${l}</div></div>`}
+function chart(){const W=640,H=190,P=30;const pts=[];for(let d=1;d<=90;d++){const s=synth(d);pts.push([d,s.delivered])}
+ const x=d=>P+(d-1)/89*(W-P*1.5),y=v=>H-P-(v/Math.max(S.pool,1))*(H-P*1.8);
+ const done=pts.filter(p=>p[0]<=S.day).map(p=>`${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ');
+ const future=pts.filter(p=>p[0]>=S.day).map(p=>`${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ');
+ return`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Hours delivered over the 90-day pilot against the hour pool">
+<line x1="${P}" y1="${y(S.pool)}" x2="${W-P/2}" y2="${y(S.pool)}" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="${P}" y="${y(S.pool)-6}" font-size="12" fill="var(--red-dark)">Pool: ${S.pool} h</text>
+<line x1="${P}" y1="${H-P}" x2="${W-P/2}" y2="${H-P}" stroke="var(--line-strong)"/>
+${[1,30,60,90].map(d=>`<text x="${x(d)}" y="${H-10}" font-size="12" fill="var(--muted)" text-anchor="${d===1?'start':d===90?'end':'middle'}">Day ${d}</text>`).join('')}
+<polyline points="${future}" fill="none" stroke="var(--line-strong)" stroke-width="2" stroke-dasharray="3 4"/>
+<polyline points="${done}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+<line x1="${x(S.day)}" y1="${P/2}" x2="${x(S.day)}" y2="${H-P}" stroke="var(--blue-ink)" stroke-width="1"/>
+</svg>`}
+function liveBox(t){const a=t.active;return`<div class="live-now" aria-live="polite"><span class="small" style="font-weight:700;color:var(--blue-ink)"><span class="dot ${a?'on':''}"></span>Live right now</span>
+<div class="big ${a&&a<MIN?'hid':''}">${a===0?0:a<MIN?'Fewer than 5':`<span style="font-size:.4em;display:block">About</span>${Math.max(5,Math.round(a/5)*5)}`}</div><div style="font-weight:600">staff with a PSW visit underway</div>
+<p class="tiny muted" style="margin:0">Hidden under 5 and rounded to the nearest 5. In production it also updates every 15 minutes, so one person arriving can’t be spotted.</p></div>`}
+function dashTab(){if(!S.staff.length)return emptyStaff();const t=totals();const pct=Math.min(100,t.committed/S.pool*100);const users=sup(t.users);
+ return`<div class="tm"><div><div class="tiny" style="opacity:.8">Pilot time machine</div><div class="day">Day ${S.day} of 90</div></div>
+<input type="range" min="1" max="90" value="${S.day}" data-day aria-label="Pilot day">
+<button class="btn sm" data-act="play">${S.playing?'Pause':S.day>=90?'Replay':'Play 3 months'}</button></div>
+<p class="hint">The time machine adds synthetic staff joining and booking over the pilot. Your own demo bookings are counted on top.</p>
+<div class="live" style="margin-top:1rem">${liveBox(t)}
+<div class="g3" style="align-content:start">${stat(S.staff.length,'Staff eligible')}${stat(num(t.enrolled),'Signed up',t.enrolled<MIN)}${stat(num(t.users||0),'People using respite',t.users>0&&!users)}
+${stat(num(t.delivered),'Hours of care delivered')}${stat(money(t.delivered*S.rate),'Spent so far')}${stat(t.answered>=MIN?num(t.saved):'',t.answered>=MIN?'Sick days or shifts saved (self-reported)':'Sick days saved appear after 5 answers',t.answered<MIN)}</div></div>
+<div class="panel" style="margin-top:1.1rem"><div class="page-head" style="margin:0"><div class="row"><h3>Hours against the pool</h3><span class="small muted">${t.committed} of ${S.pool} hours committed</span></div></div>
+<div class="meter ${pct>85?'hot':''}"><span style="width:${pct}%"></span></div>${(()=>{const cap=pacedCapAt(S.day),pct=cap?t.committed/cap:0;const what=S.paced&&cap<S.pool?`month ${pilotMonth()}’s hours`:'the pool';return pct>=.8&&!t.poolWait?`<div class="warn small"><b>${pct>=1?`All of ${what} ${S.paced&&cap<S.pool?'are':'is'} booked.`:`${Math.round(pct*100)}% of ${what} ${S.paced&&cap<S.pool?'are':'is'} booked.`}</b> Consider adding hours before staff are waitlisted.</div>`:''})()}
+${S.paced?`<p class="small muted">Pool released monthly: ${num(pacedCapAt(S.day))} of ${S.pool} hours available by pilot month ${pilotMonth()}.</p>`:''}
+${t.poolWait?`<div class="warn small">${num(t.poolWait)} booking requests waitlisted because ${S.paced&&pacedCapAt(S.day)<S.pool?'this month’s share':'the pool'} is full. That’s evidence demand is ahead of budget.</div>`:''}${chart()}</div>
+<div class="panel" style="margin-top:1.1rem"><div class="page-head" style="margin:0"><div class="row"><h3>Value to the company</h3><span class="small muted">Estimate, self-reported</span></div></div>
+<div class="g2" style="margin-top:.6rem;align-items:end"><div><label for="dc" style="margin-top:0">Cost to you of one day of absence ($)</label><input id="dc" type="number" min="0" value="${S.dayCost}" data-daycost><p class="hint">Default is Ontario’s 2025 average hourly wage ($37.72) × 8 hours. Add overtime or backfill if you pay it to cover a shift.</p></div><div></div></div>
+<div id="valueBox">${valueInner(t)}</div></div>
+<div class="g2" style="margin-top:1.1rem"><div class="panel"><h3>Hours by type of help</h3>${users?SERVICES.map(s=>`<div class="hbar"><span>${s.name}</span><div class="meter"><span style="width:${t.delivered?t.byCat[s.id]/Math.max(1,t.delivered)*100:0}%"></span></div><b>${t.byCat[s.id]}</b></div>`).join(''):'<p class="small muted">Shown once 5 or more people have booked.</p>'}</div>
+<div class="panel"><h3>People using respite, by department</h3>${t.depts.map(d=>`<div class="hbar"><span>${esc(d.dept)}</span><span class="small ${d.users<MIN?'muted':''}">${d.users===0?'None yet':d.users<MIN?'Fewer than 5':d.users}</span><span></span></div>`).join('')}
+<p class="small" style="margin-top:.8rem">Average rating: <b>${t.reviews>=MIN?(t.ratingSum/t.reviews).toFixed(1)+' of 5':'shown after 5 reviews'}</b><br>Rural visits booked with 2-day notice: <b>${t.rural<MIN?(t.rural?'Fewer than 5':0):t.rural}</b></p></div></div>`}
+function valueInner(t){if(t.answered<MIN)return`<p class="small muted" style="margin-top:.8rem">Shown once 5 or more employees have answered “Did this visit help you avoid a sick day or missed shift?”</p>`;
+ const saved=t.saved*S.dayCost,spend=t.delivered*S.rate,ratio=spend?saved/spend:0;
+ const msg=ratio>=1?`Every $1 spent on respite avoided about $${ratio.toFixed(2)} in absence costs, so the program more than pays for itself on absences alone.`:`Absence savings cover about ${Math.round(ratio*100)}% of the cost so far. The rest of the value, like keeping experienced staff and less burnout, isn’t measured here.`;
+ return`<div class="g4" style="margin-top:.8rem">${stat(num(t.saved),'Sick days or shifts avoided')}${stat(money(saved),'Absence cost avoided')}${stat(money(spend),'Spent on respite')}${stat((saved-spend>=0?'+':'−')+money(Math.abs(saved-spend)),saved-spend>=0?'Saved beyond the cost':'Cost beyond absence savings')}</div>
+<p class="small" style="margin-top:.7rem">${msg}</p><p class="tiny muted">Based on ${num(t.answered)} answers. Self-reported, so it shows direction, not proof. Turnover and replacement costs aren’t included.</p>`}
+function emptyStaff(){return`<div class="panel"><h3>Add staff first</h3><p class="muted">The dashboard fills in once your staff list is uploaded.</p><div class="btns"><button class="btn" data-tab="staff">Add staff</button></div></div>`}
+function afterTab(){if(!S.staff.length)return emptyStaff();const t=totals();
+ if(S.day<90)return`<div class="panel"><h3>The pilot is at day ${S.day} of 90</h3><p class="muted">Monthly costs are calculated when the pilot ends, from all 90 days of real use. Play the time machine on the dashboard, or jump to the end.</p><div class="btns"><button class="btn" data-act="jump90">Jump to day 90</button><button class="btn ghost" data-tab="dash">Open dashboard</button></div></div>`;
+ const months=3,E=S.staff.length,waitH=t.poolWait*3,pilotCare=t.delivered*S.rate;
+ const mh=t.delivered/months,base=mh*S.rate,full=(t.delivered+waitH)/months*S.rate,grow=full*(1+S.growth/100);
+ const value=(t.saved/months)*S.dayCost;const util=t.committed/S.pool;
+ let rec,why,msg;if(t.users<MIN){rec='Too early to decide';why='Fewer than 5 people have used respite. Send a reminder before deciding.';msg='A reminder: you can get up to 10 free hours of help at home if you look after someone. It’s private.'}
+ else if(util>=.85||t.poolWait){rec='Scale';why=`${Math.round(util*100)}% of the pool is committed${t.poolWait?' and requests are being waitlisted':''}. Demand is ahead of budget.`;msg='Respite has been popular, so we’re continuing it with more hours. If you were waitlisted, you can book soon.'}
+ else if(util>=.35){rec='Sustain';why=`${Math.round(util*100)}% of the pool is committed: healthy use without overspending.`;msg='Respite support is continuing. Booking stays private.'}
+ else{rec='Relaunch or stop';why=`Only ${Math.round(util*100)}% of the pool was used. Try one more round of plain-language communication first.`;msg='Do you help a parent, partner, child or neighbour? You may qualify for free respite hours. No proof needed.'}
+ const row=(n,c,note)=>`<tr><td><b>${n}</b><br><span class="tiny muted">${note}</span></td><td>${money(c+S.admin)}</td><td>${money((c+S.admin)/E)}</td><td>${money((c+S.admin)*12)}</td></tr>`;
+ return`<div class="soft" style="margin-bottom:1.1rem;border-left:4px solid var(--blue)"><b>How the monthly figure is calculated:</b> the pilot ran 90 days, so the total for the pilot ÷ 3 = one month. Every amount below is <b>per month</b> unless it says per year.</div>
+<div class="g2"><div class="panel"><h3>Based on the full 90-day pilot</h3>
+<div class="g2" style="margin-top:.7rem">${stat(money(pilotCare),'Total care cost, 90-day pilot')}${stat(money(base),'Care cost per month (total ÷ 3)')}${stat(num(mh),'Care hours per month')}${stat(money(base/E),'Care cost per employee per month')}${stat(t.users<MIN?'':num(t.users),'People who used respite',t.users<MIN)}</div>
+<label for="g">Expected growth after the pilot: <span id="v-g">${S.growth}</span>%</label><input id="g" type="range" min="0" max="100" step="5" value="${S.growth}" data-growth>
+<label for="ad">Admin and platform cost per month ($, assumption)</label><input id="ad" type="number" min="0" value="${S.admin}" data-admin>
+${t.poolWait?`<p class="hint" style="margin-top:.7rem">${num(t.poolWait)} requests (about ${num(waitH)} hours) were waitlisted, so real demand is higher than hours delivered.</p>`:''}</div>
+<div class="panel"><h3>Monthly cost after the pilot</h3><p class="small muted">Includes ${money(S.admin)} a month for admin.</p><div class="tablewrap" style="margin-top:.6rem"><table><thead><tr><th>Option</th><th>Per month</th><th>Per employee per month</th><th>Per year</th></tr></thead><tbody>
+${row('Keep the same pool',base,`${num(mh)} hours a month, waitlist stays`)}${waitH?row('Meet all demand',full,`Adds the ${num(waitH)} waitlisted hours`):''}${row(`Meet demand and grow ${S.growth}%`,grow,'More staff sign up over time')}</tbody></table></div>
+<p class="small" style="margin-top:.8rem">Estimated value of sick days saved: <b>${t.answered>=MIN?money(value)+' per month':'not enough answers yet'}</b></p><p class="tiny muted">Assumes ${money(S.dayCost)} per day of absence avoided. Self-reported, shows direction, not proof.</p></div></div>
+<div class="panel" style="margin-top:1.1rem;border-left:4px solid var(--blue-ink)"><h3>Recommendation: ${rec}</h3><p>${why}</p>
+<p class="small"><b>Why this, why now:</b> ${aboutRange(E*.30,E*.35)} of the ${E} staff on your list are likely caregivers. Flexible hours help them manage work, but respite lightens the load at home, so they stop using sick days and vacation to cover care.</p>
+<div class="soft" style="margin-top:.6rem"><b>Message for staff</b><br>${msg}</div></div>`}
+
+// ----- SE Shield -----
+function shieldPage(){return`<div class="page-head"><h2 class="rule">${logo('shield',40)}</h2><p class="muted" style="margin-top:.6rem">The staff app, shown as it appears on a phone.</p></div>
+<div class="g2" style="align-items:start">${phone()}<div class="panel"><h3>What crossed the bridge</h3><p class="small muted">What each side sees, step by step.</p>${logTable()}</div></div>`}
+function chatView(){const c=S.chat,b=S.bookings.find(x=>x.id===c.id);const key=c.id+'|'+c.who;const msgs=(S.threads[key]||[]);
+ const title=c.who==='psw'?`${b.worker}, your PSW`:`${b.provider} care coordinator`;
+ return`<button class="link small" data-act="closeChat">Back to visits</button><h3 style="margin-top:.5rem">${title}</h3>
+${c.who==='coord'?`<p class="small muted">On shift 7 a.m. to 9 p.m. Call 1-800-555-0142 or message below.</p>`:`<p class="small muted">With them now for your ${svc(b.svc).name.toLowerCase()} visit.</p>`}
+<div class="warn tiny">In an emergency, call 911. Please don’t share health card numbers or detailed medical information here.</div>
+<div style="display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0;max-height:260px;overflow:auto" aria-live="polite">${msgs.length?msgs.map(m=>`<div style="align-self:${m.me?'flex-end':'flex-start'};max-width:85%;background:${m.me?'var(--blue-ink)':'var(--surface-2)'};color:${m.me?'var(--on-blue)':'var(--plum)'};padding:.5rem .75rem;border-radius:14px" class="small">${esc(m.text)}<div class="tiny" style="opacity:.75">${m.t}</div></div>`).join(''):'<p class="small muted">No messages yet.</p>'}</div>
+<label for="msg">Message</label><input id="msg" type="text" value="${esc(c.draft||'')}" placeholder="${c.who==='psw'?'For example, Dad’s pills are on the counter':'For example, the visit is running long'}" data-msg>
+<div class="btns"><button class="btn" data-act="sendMsg">Send</button></div>
+<p class="tiny muted" style="margin-top:.8rem">Messages go to ${b.provider} only. Your employer never sees them.</p>`}
+const REPLIES={psw:['Hi! I’m here with them now and everything’s going well.','Got it, I’ll take care of that.','No problem. I’ll message you when we’re finished.'],coord:['Thanks for reaching out. I’m the coordinator on shift. How can I help?','I’ve noted that and I’m checking in with the PSW now.','Done. I’ll follow up if anything changes.']};
+function sendMsg(){const c=S.chat,v=($('#msg').value||'').trim();if(!v)return;const key=c.id+'|'+c.who;const th=S.threads[key]=S.threads[key]||[];th.push({me:true,text:v.slice(0,300),t:fmtClock(new Date())});c.draft='';
+ const b=S.bookings.find(x=>x.id===c.id);log(c.who==='psw'?`Messaged ${b.worker}`:'Messaged the coordinator',`Message passed to ${b.provider}, not stored by SE Bridge`,'Nothing');render();
+ const n=th.filter(m=>!m.me).length;setTimeout(()=>{th.push({me:false,text:REPLIES[c.who][Math.min(n,2)],t:fmtClock(new Date())});const busy=document.activeElement&&document.activeElement.id==='msg';if(busy)S.chat.draft=document.activeElement.value;render();if(busy){const m=$('#msg');m&&m.focus()}},1500)}
+function saveAddr(){const g=id=>($('#'+id)?.value||'').trim();const a={street:g('street').slice(0,120),unit:g('unit').slice(0,40),city:g('city').slice(0,60),who:g('who').slice(0,40),access:g('access').slice(0,160),consent:!!$('#addrConsent')?.checked,postal:S.wiz.cov.postal};
+ if(!a.street||!a.city){S.err={addr:'Add the street address and city so the PSW can find the home.'};S.wiz.addr=a;render();return false}
+ if(!a.who){S.err={addr:'Add the first name of the person receiving care.'};S.wiz.addr=a;render();return false}
+ if(!a.consent){S.err={addr:'Confirm the person receiving care agrees to share their address with the provider.'};S.wiz.addr=a;render();return false}
+ S.wiz.addr=a;return true}
+function phone(){const p=S.chat?chatView():S.wiz?wizard():S.step==='signin'?signin():S.step==='contact'?contactView():S.step==='verify'?verifyView():S.step==='about'?about():home();
+ return`<div class="phone"><div class="phone-top">${logo('shield',26)}${S.me?`<button class="link small" data-act="signout">Sign out</button>`:''}</div>${p}${S.showReview?reviewModal():''}</div>`}
+function verifyView(){const v=S.verify;return`<div class="progress"><span class="on"></span><span class="on"></span><span></span></div><h3>Check your ${v.via==='phone'?'phone':'email'}</h3><p class="small muted">We sent a 6-digit code to <b>${esc(v.masked)}</b>. It expires in 10 minutes.</p>
+<div class="soft small" style="margin-top:.7rem"><b>Demo inbox</b><br>Your SE Shield code is <b style="font-size:1.2rem;letter-spacing:.12em">${v.code}</b></div>
+<label for="otp">6-digit code</label><input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456">${S.err.otp?`<p class="err">${esc(S.err.otp)}</p>`:''}
+<div class="btns"><button class="btn" data-act="verifyCode">Verify</button><button class="btn sm ghost" data-act="resend">Send a new code</button></div>
+<p class="hint" style="margin-top:1rem">The email is only used to send this code. It isn’t stored.</p><button class="link small" data-act="signout">Use a different email</button>`}
+function signin(){return`<h3>Respite support from your employer</h3><p class="muted small">Up to 10 free hours of help at home if you look after someone. Your employer never sees your name or what you book.</p>
+<label for="em">Work email</label><input id="em" type="email" placeholder="you@maplecare.ca" autocomplete="email">${S.err.em?`<p class="err">${esc(S.err.em)}</p>`:''}
+<div class="btns"><button class="btn" data-act="signin">Continue</button>${S.staff.length?`<button class="btn sm ghost" data-act="demoEmail">Use a demo email</button>`:''}</div>
+${S.staff.length?'':`<div class="warn small">Add staff in SE Pulse first, then come back.</div>`}
+<p class="hint" style="margin-top:1.2rem">No work email? Ask for the access code on the staff-room poster.</p>`}
+function about(){const signs=['Picking up groceries or prescriptions','Driving someone to appointments','Checking in on a parent or neighbour','Helping someone wash or get dressed','Caring for a child with a disability','Helping someone from far away'];
+ return`<div class="progress"><span class="on"></span><span></span></div><h3>Does any of this sound like you?</h3><p class="small muted">Lots of people help family without calling it caregiving. Pick any that fit. Your picks stay on this phone.</p>
+<div class="chips">${signs.map(s=>`<button class="chip" data-chip aria-pressed="false">${s}</button>`).join('')}</div>
+<p class="small">The person you help could be a parent, partner, child, relative, friend, neighbour or chosen family.</p>
+<label class="check"><input type="checkbox" id="attest"> <span>I help look after someone outside of work. No proof needed.</span></label>${S.err.attest?`<p class="err">${esc(S.err.attest)}</p>`:''}
+<div class="soft small" style="margin-top:1rem"><b>What this pilot is and isn’t</b><br>Up to 10 free hours over 3 months, private from your employer. It’s a pilot, not a permanent benefit, and it doesn’t replace sick days or other benefits.</div>
+<div class="btns"><button class="btn" data-act="attest">See my respite hours</button></div>`}
+function home(){const left=CAP-myHours();const live=S.bookings.find(b=>b.status==='in_progress');const vis=S.bookings.filter(b=>b.status!=='cancelled').sort((a,b)=>at(b.date,b.time)-at(a.date,a.time));
+ return`${live?`<div class="arrival">${mark('shield',28)}<div><b>${live.worker} has arrived</b><br><span class="small">Started at ${fmtClock(new Date(live.startedAt))} with ${live.provider}</span></div></div>`:''}
+<h3>Your respite hours</h3><p><b>${left}</b> of 10 hours left</p><div class="meter"><span style="width:${left/CAP*100}%"></span></div>
+<div class="btns"><button class="btn" data-act="startWiz" ${left<=0?'disabled':''}>Book help</button></div>
+<h4 style="margin-top:1.3rem">Your visits</h4>${vis.length?vis.map(visitCard).join(''):'<p class="small muted">No visits yet.</p>'}
+<p class="hint" style="margin-top:1rem">Your employer sees totals for groups of 5 or more. Never your name, never the person you help.</p>`}
+function visitCard(b){const st={pending:'Waiting for approval',booked:'Booked',in_progress:'PSW with them now',done:'Completed',declined:'Not approved'}[b.status];const dl=changeDeadline(b);
+ return`<div class="visit"><div class="top"><b>${svc(b.svc).name}, ${b.hours} h</b><span class="tag ${b.status==='in_progress'?'live':''}">${st}</span></div>
+<div class="small muted">${fmtDate(b.date)} at ${fmtTime(b.time)}<br>${b.worker?`${b.worker} from ${b.provider}`:b.provider}${b.rural?' (remote area)':''}${b.addr?`<br>${esc(b.addr.street)}, ${esc(b.addr.city)}`:''}</div>
+${b.status==='pending'?`<div class="soft tiny" style="margin-top:.4rem">Because of the travel distance, a ${b.provider} coordinator is checking that a PSW can reach this address. Usually within 1 business day. Your hours are held until then.</div>`:''}
+${b.status==='declined'?`<div class="warn tiny">${b.provider} couldn’t find a PSW for this distance and time. Your ${b.hours} hours are back in your balance. Try another day, or contact the coordinator.</div>`:''}
+${b.status==='in_progress'?`<div class="btns" style="margin-top:.5rem"><button class="btn sm" data-chat="${b.id}|psw">Message ${b.worker}</button><button class="btn sm ghost" data-chat="${b.id}|coord">Contact the coordinator</button></div>`:''}
+${b.tasks.length?`<details class="small" style="margin-top:.4rem"><summary>To-do list (${b.tasks.length})</summary><ol style="margin:.3rem 0 0;padding-left:1.2rem">${b.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></details>`:''}
+${b.status==='booked'&&b.asap?`<div class="ok tiny" style="margin-top:.4rem">On the way, estimated arrival ${fmtTime(b.time)}</div><div class="btns" style="margin-top:.4rem"><button class="btn sm danger" data-cancel="${b.id}">Cancel request</button></div>`:''}
+${(b.status==='booked'&&!b.asap)||b.status==='pending'?(canChange(b)?`${new Date()>dl?`<p class="tiny muted" style="margin:.4rem 0 0">Less than 24 hours away. A new time depends on PSW availability.</p>`:''}<div class="btns" style="margin-top:.4rem"><button class="btn sm ghost" data-change="${b.id}">Change date or time</button><button class="btn sm danger" data-cancel="${b.id}">Cancel visit</button></div>`:''):''}
+${b.status==='done'&&b.stars?`<p class="tiny muted" style="margin:.4rem 0 0">You rated this visit ${b.stars} of 5.</p>`:''}</div>`}
+function wizard(){const w=S.wiz,steps=5;const head=`<div class="progress">${Array.from({length:steps},(_,i)=>`<span class="${i<w.step?'on':''}"></span>`).join('')}</div><button class="link small" data-act="wizBack">${w.step===1||w.editId&&w.step===3?'Cancel':'Back'}</button>`;
+ let body='';
+ if(w.step===1)body=`<h3 style="margin-top:.5rem">What help do you need?</h3><div class="svc" style="margin-top:.7rem">${SERVICES.map(s=>`<button data-svc="${s.id}" aria-pressed="${w.svc===s.id}"><span class="ic">${icon(s.id)}</span><span><b>${s.name}</b><span class="d">${s.d}</span></span></button>`).join('')}</div>
+<div class="btns"><button class="btn" data-act="wizNext" ${w.svc?'':'disabled'}>Next</button></div>`;
+ else if(w.step===2)body=`<h3 style="margin-top:.5rem">Where is the help needed?</h3><p class="small muted">The postal code of the person you help. It can be different from yours.</p>
+<label for="pc">Postal code</label><input id="pc" type="text" value="${esc(w.postal)}" placeholder="M4C 1B5" autocomplete="off">
+<div class="btns" style="margin-top:.5rem"><button class="btn sm ghost" data-act="checkPc">Check providers</button></div>${S.err.pc?`<p class="err">${esc(S.err.pc)}</p>`:''}
+${w.cov?`<div class="ok small"><b>${w.cov.provider}</b> covers ${w.cov.postal}.<br>${w.cov.rural?'This is a remote area. Book at least 2 days ahead, and a Northway coordinator will approve the booking because of the travel distance.':'Book help as soon as possible, or schedule it up to 7 days ahead.'}</div>
+<h4 style="margin-top:1.1rem">Address for the visit</h4><p class="small muted">A provider covers this area, so now add the exact address. It goes to ${w.cov.provider} only. Your employer never sees it.</p>
+${S.savedAddr&&S.savedAddr.postal===w.cov.postal&&!w.addr?`<div class="btns" style="margin-top:.3rem"><button class="btn sm ghost" data-act="useSaved">Use saved address: ${esc(S.savedAddr.street)}</button></div>`:''}
+<label for="street">Street address</label><input id="street" type="text" value="${esc(w.addr?.street||'')}" autocomplete="address-line1" placeholder="123 Danforth Ave">
+<div class="g2" style="gap:.7rem"><div><label for="unit">Unit or buzzer (optional)</label><input id="unit" type="text" value="${esc(w.addr?.unit||'')}" autocomplete="address-line2"></div><div><label for="city">City or town</label><input id="city" type="text" value="${esc(w.addr?.city||'')}" autocomplete="address-level2"></div></div>
+<label for="who">First name of the person receiving care</label><input id="who" type="text" value="${esc(w.addr?.who||'')}" placeholder="So the PSW knows who to ask for">
+<label for="access">Getting in (optional)</label><input id="access" type="text" value="${esc(w.addr?.access||'')}" placeholder="Parking, side door, a dog at home">
+<label class="check"><input type="checkbox" id="addrConsent" ${w.addr?.consent?'checked':''}> <span>The person receiving care agrees to share this address with ${w.cov.provider}.</span></label>
+${S.err.addr?`<p class="err">${esc(S.err.addr)}</p>`:''}
+<p class="tiny muted">In the full version, the address is checked as you type against Canada Post’s address database, and the provider confirms it by phone before the first visit.</p>`:''}
+<p class="hint">Try a rural code like P0A 1A0 to see the 2-day rule.</p>
+<div class="btns"><button class="btn" data-act="wizNext" ${w.cov?'':'disabled'}>Next</button></div>`;
+ else if(w.step===3){const dates=datesFor(w.cov.rural);if(!dates.includes(w.date))w.date=dates[0];const times=timesFor(w.date,w.cov.rural);if(!times.includes(w.time))w.time=times[0];const left=CAP-myHours()+(w.editId?S.bookings.find(b=>b.id===w.editId).hours:0);
+  const canAsap=!w.cov.rural&&!w.editId;if(!canAsap)w.when='later';const asap=w.when==='asap',slot=asapSlot();
+  body=`<h3 style="margin-top:.5rem">When, and for how long?</h3>
+${canAsap?`<div class="chips" role="radiogroup" aria-label="When"><button class="chip" role="radio" data-when="asap" aria-pressed="${asap}" aria-checked="${asap}">As soon as possible</button><button class="chip" role="radio" data-when="later" aria-pressed="${!asap}" aria-checked="${!asap}">Pick a date and time</button></div>`:`<p class="small muted">${w.cov.rural?'Remote area: from 2 days ahead, up to 7 days, so a PSW can travel to you.':'Pick a new date and time, up to 7 days ahead.'}</p>`}
+${asap?`<div class="ok small">A PSW is arranged right away, with an estimated arrival of <b>${fmtDate(slot.date)} at ${fmtTime(slot.time)}</b>, and you’ll get a message when they’re on the way.</div>`
+:`<label for="dt">Date</label><select id="dt" data-wiz="date">${dates.map(d=>`<option value="${d}" ${d===w.date?'selected':''}>${fmtDate(d)}</option>`).join('')}</select>
+<label for="tm">Start time</label><select id="tm" data-wiz="time">${times.map(t=>`<option value="${t}" ${t===w.time?'selected':''}>${fmtTime(t)}</option>`).join('')}</select>`}
+<label for="hr">Hours</label><select id="hr" data-wiz="hours">${[1,2,3,4].filter(h=>h<=left).map(h=>`<option ${h===w.hours?'selected':''}>${h}</option>`).join('')}</select>
+<p class="hint">You have ${left} hours left.</p><div class="btns"><button class="btn" data-act="wizNext">Next</button></div>`}
+ else if(w.step===4)body=`<h3 style="margin-top:.5rem">Anything the PSW should help with?</h3><p class="small muted">Add as many requests as you like. Skip this if you’re not sure.</p>
+<label for="task">Common requests</label><select id="task"><option value="">Choose a request</option>${TASKS.filter(t=>!w.tasks.includes(t)).map(t=>`<option>${t}</option>`).join('')}</select>
+<div class="btns" style="margin-top:.5rem"><button class="btn sm ghost" data-act="addTask">Add request</button></div>
+<label for="note">Your own note</label><input id="note" type="text" placeholder="For example, Mom likes tea at 3 p.m.">
+<div class="btns" style="margin-top:.5rem"><button class="btn sm ghost" data-act="addNote">Add note</button></div>
+<div class="chips">${w.tasks.map((t,i)=>`<button class="chip rm" data-rmtask="${i}" aria-label="Remove ${esc(t)}">${esc(t)}</button>`).join('')}</div>
+${fitNote(w)}${scopeNote(w)}
+<details class="small" style="margin-top:.6rem" id="scopeInfo" ${S.scopeOpen?'open':''}><summary>What a PSW can and can’t help with</summary><p style="margin:.4rem 0 0"><b>Can:</b> housekeeping, meals, laundry, errands, companionship, going to appointments, help moving around the home, personal care.</p><p style="margin:.4rem 0 0"><b>Can’t:</b> moving house or heavy lifting, repairs or renovations, childcare or pet sitting, banking, or medical tasks like injections.</p></details>
+<p class="tiny muted">Don’t include health card numbers or medical details. Requests go to the provider only, never your employer.</p>
+<div class="btns"><button class="btn" data-act="wizNext">Review booking</button></div>`;
+ else{const end=new Date(at(w.date,w.time).getTime()+w.hours*3600e3);const ed=(s,l)=>`<button class="link" data-goto="${s}">Edit</button>`;
+  body=`<h3 style="margin-top:.5rem">Check and confirm</h3><dl class="summary">
+<dt>Service</dt><dd><span>${svc(w.svc).name}</span>${w.editId?'':ed(1)}</dd>
+<dt>Address</dt><dd><span>${w.addr?`${esc(w.addr.street)}${w.addr.unit?', '+esc(w.addr.unit):''}, ${esc(w.addr.city)} ${w.cov.postal}<br><span style="font-weight:400">For ${esc(w.addr.who)}. Sent to ${w.cov.provider} only.</span>`:`${w.cov.postal}, ${w.cov.provider}`}</span>${w.editId?'':ed(2)}</dd>
+<dt>When</dt><dd><span>${w.when==='asap'?`As soon as possible. Estimated arrival ${fmtDate(asapSlot().date)} at ${fmtTime(asapSlot().time)}`:`${fmtDate(w.date)}, ${fmtTime(w.time)} to ${fmtClock(end)}`}</span>${ed(3)}</dd>
+<dt>Hours</dt><dd><span>${w.hours} of your ${CAP-myHours()+(w.editId?S.bookings.find(b=>b.id===w.editId).hours:0)} remaining</span>${ed(3)}</dd>
+<dt>To-do list</dt><dd><span>${w.tasks.length?`<ol style="margin:0;padding-left:1.1rem;font-weight:400">${w.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:'None added'}</span>${w.editId?'':ed(4)}</dd></dl>
+${fitNote(w)}${scopeNote(w)}
+<div class="soft small" style="margin-top:.9rem">${w.when==='asap'?'You can cancel until the PSW arrives.':'You can change the date or time, or cancel, any time before the visit starts.'}</div>
+${w.editId?'':`<label class="check"><input type="checkbox" id="purpose" ${w.purpose?'checked':''}> <span>This visit is to help someone I look after.</span></label>`}
+${S.err.book?`<p class="err">${esc(S.err.book)}</p>`:''}
+<div class="btns"><button class="btn" data-act="book">${w.editId?'Save new time':'Book a worker'}</button></div>`}
+ return head+body}
+function estMin(w){return w.tasks.reduce((a,t)=>a+taskMin(t),0)}
+const hm=m=>{const h=Math.floor(m/60),r=m%60;return h&&r?`${h} h ${r} min`:h?`${h} h`:`${r} min`};
+function fitNote(w){if(!w.tasks.length)return'';const m=estMin(w),left=CAP-myHours()+(w.editId?S.bookings.find(b=>b.id===w.editId).hours:0);
+ const disc='<br><span class="tiny">Times are estimates. The visit could take more or less time than estimated.</span>';
+ if(m<=w.hours*60)return`<div class="ok small">These requests take about ${hm(m)}, which fits your ${w.hours} hours.${disc}</div>`;
+ const need=Math.min(4,Math.ceil(m/60),left);
+ return`<div class="warn small">These requests may take about ${hm(m)}, but you booked ${w.hours} hour${w.hours>1?'s':''}. The PSW works from the top of the list down, so ${need>w.hours?'add time or ':''}remove anything less important.${disc}${need>w.hours?`<div class="btns" style="margin-top:.5rem"><button class="btn sm" data-sethours="${need}">Change to ${need} hours</button></div>`:''}</div>`}
+function scopeNote(w){const f=w.tasks.filter(flagged);if(!f.length)return'';return`<div class="warn small"><b>A PSW may not be able to help with:</b> ${f.map(esc).join(', ')}. The provider may decline these requests. Respite is for helping someone you look after.</div>`}
+function reviewModal(){const b=S.bookings.find(x=>x.status==='done'&&!x.reviewed);if(!b)return'';const r=S.review;
+ return`<div class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="rvh"><div class="modal"><h3 id="rvh">How was your visit with ${b.worker}?</h3><p class="small muted">${svc(b.svc).name}, ${fmtDate(b.date)}</p>
+<div class="stars" role="radiogroup" aria-label="Rating">${[1,2,3,4,5].map(n=>`<button role="radio" aria-checked="${r.stars===n}" aria-label="${n} star${n>1?'s':''}" data-star="${n}"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="${n<=r.stars?'var(--blue)':'none'}" stroke="var(--blue-ink)" stroke-width="1.5"/></svg></button>`).join('')}</div>
+<label for="rc">Anything to share with ${b.provider}? (optional)</label><input id="rc" type="text" placeholder="Goes to the provider only" value="${esc(r.comment||'')}" data-rc>
+<p class="small" style="margin-top:.8rem"><b>Did this visit help you avoid using a sick day or missing a shift?</b> <span class="muted">(optional)</span></p>
+<div class="chips">${[['yes','Yes'],['no','No']].map(([v,l])=>`<button class="chip" data-saved="${v}" aria-pressed="${r.saved===v}">${l}</button>`).join('')}</div>
+<p class="tiny muted">Every question is optional. Send whatever you’ve filled in.</p>
+${S.err.review?`<p class="err">${esc(S.err.review)}</p>`:''}
+<div class="btns"><button class="btn" data-act="submitReview">Send feedback</button><button class="btn ghost sm" data-act="later">Later</button></div></div></div>`}
+function logTable(){if(!S.log.length)return'<p class="muted small">Nothing yet. Each action will appear here.</p>';
+ return`<div class="tablewrap"><table><thead><tr><th>Employee does</th><th>SE Bridge records</th><th>HR sees</th></tr></thead><tbody>${S.log.map(l=>`<tr><td>${esc(l.emp)}</td><td><span class="tiny muted">${l.t}</span><br>${esc(l.bridge)}</td><td class="hr">${esc(l.hr)}</td></tr>`).join('')}</tbody></table></div>`}
+
+// ----- Split screen -----
+function split(){const t=S.hr?totals():null;return`<div class="page-head"><h2 class="rule">Two sides of one visit</h2><p class="muted" style="margin-top:.6rem">Left: everything the employee sees. Right: everything HR sees at the same moment. Use the provider simulator to make the PSW arrive and finish.</p></div>
+<div class="split"><div><div class="side-head">${logo('shield',28)}<span class="small muted">Employee</span></div>${phone()}</div>
+<div><div class="side-head">${logo('pulse',28)}<span class="small muted">HR, same moment</span></div>
+${t?`<div class="live">${liveBox(t)}<div class="g2" style="align-content:start">${stat(num(t.committed),'Pool hours committed')}${stat(num(t.users||0),'People using respite',t.users>0&&t.users<MIN)}${stat(num(t.delivered),'Hours delivered')}${stat(money(t.delivered*S.rate),'Spent so far')}</div></div>`:`<div class="panel"><p class="muted">${S.hr?'Add staff in SE Pulse to see HR’s view.':'Sign in to SE Pulse as HR to see this side.'}</p><div class="btns"><button class="btn sm" data-go="pulse">Open SE Pulse</button></div></div>`}
+<div class="panel" style="margin-top:1rem"><h3>What crossed the bridge</h3>${logTable()}</div></div></div>`}
+
+// ----- Data and security -----
+function security(){return`<div class="page-head"><h2 class="rule">Data and security</h2><p class="muted" style="margin-top:.6rem">What SE Bridge collects, what it never collects, and who sees what.</p></div>
+<div class="pipe"><div class="stage"><h4>1. HR uploads</h4><p class="small">Work email, department, benefits eligible. Nothing else.</p></div>
+<div class="stage bridge"><h4>2. SE Bridge tokenizes</h4><p class="small">Each email becomes a keyed HMAC-SHA-256 token. Ineligible, invalid and duplicate rows are dropped.</p></div>
+<div class="stage bridge"><h4>3. Stored</h4><p class="small">Token, department, bookings. Emails are discarded. Departments under 5 become “Other”.</p></div>
+<div class="stage"><h4>4. HR sees</h4><p class="small">Totals only. Any count under 5 shows as “Fewer than 5”.</p></div></div>
+<div class="g2" style="margin-top:1.1rem"><div class="panel"><h3>Try it</h3><p class="small muted">Type any email to see the token SE Bridge would keep. The key is created fresh in your browser and never leaves it.</p>
+<label for="try">Email</label><input id="try" type="email" placeholder="name@example.ca" data-try><p class="small" style="margin-top:.7rem">Token: <code id="tryOut">type an email</code></p></div>
+<div class="panel"><h3>Never collected</h3><p class="small">Employee names, diagnoses, proof of caregiving, income, or hours worked. Self-identification picks in SE Shield never leave the phone.</p><h3 style="margin-top:1rem">Location data</h3><p class="small">The visit address and the first name of the person receiving care are asked for only after a provider confirms coverage. They’re encrypted and passed to the provider, who needs them to deliver care. SE Bridge keeps only the first 3 characters of the postal code, used in totals to show coverage gaps. There’s no GPS or live location tracking of employees or PSWs: arrival comes from the provider’s own check-in signal.</p></div></div>
+<div class="panel tablewrap" style="margin-top:1.1rem"><h3>Who sees what</h3><table style="margin-top:.5rem"><thead><tr><th>Information</th><th>Employee</th><th>Provider and PSW</th><th>HR</th><th>SE Health evaluators</th></tr></thead><tbody>
+<tr><td>Who booked</td><td>Their own</td><td>Yes, to deliver care</td><td>Never</td><td>Never</td></tr>
+<tr><td>Full address of the person receiving care</td><td>Their own</td><td>Yes, to deliver care</td><td>Never</td><td>Never</td></tr>
+<tr><td>First 3 characters of the postal code</td><td>Their own</td><td>Yes</td><td>Only in totals, for coverage gaps</td><td>Only in totals</td></tr>
+<tr><td>Visit time and to-do list</td><td>Their own</td><td>Yes</td><td>Never</td><td>Never</td></tr>
+<tr><td>Ratings and comments</td><td>Their own</td><td>Yes</td><td>Average rating, after 5 reviews</td><td>Average rating</td></tr>
+<tr><td>Hours, visits, cost</td><td>Their own</td><td>Their visits</td><td>Totals</td><td>Totals</td></tr>
+<tr><td>Department usage</td><td>No</td><td>No</td><td>Groups of 5 or more</td><td>Groups of 5 or more</td></tr></tbody></table></div>
+<div class="g2" style="margin-top:1.1rem"><div class="panel"><h3>Assumptions</h3><p class="small">${money(RATE_DEFAULT)} per respite hour. 10 hours per employee. ${POOL_DEFAULT}-hour default pool. ${money(DAYCOST)} value per sick day saved. Everyone on the employer’s list can take part unless the employer limits eligibility. Book as soon as possible (a PSW in about 2 hours, 7 a.m. to 8 p.m.) or up to 7 days ahead; remote areas need 2 days’ notice. Changes and cancellations are free until the visit starts. The pool is released in three monthly parts. Minimum group size of 5. Time machine growth is a synthetic model.</p></div>
+<div class="panel"><h3>Sources</h3><p class="small">From SE Health’s Respite for All employer research: 62% of HR leaders interviewed by CCCE didn’t know their caregiver numbers; a proxy of 30–35% of a workforce are caregivers; in Phase 1, 61 of 180 closed applications were outside the service area, hours went to household tasks (47%), companionship (30%) and personal care (18%), and scheduling flexibility was the top frustration (39%). Also referenced there: Maple (2025) and the Canadian Human Rights Commission’s 2026 guide.</p>
+<p class="small"><b>External benchmarks used in the model:</b> Ontario’s average hourly wage was $37.72 in 2025 (Financial Accountability Office of Ontario, from Statistics Canada’s Labour Force Survey). Full-time Canadians missed an average of 10.5 days of work in 2024 for illness and disability (Statistics Canada, as cited by iA Financial Group). Agency PSW rates in Ontario range from about $28 to $35 an hour (Closing the Gap Healthcare). 59% of caregivers are employed (Canadian Centre for Caregiving Excellence, Caring in Canada 2026).</p><p class="tiny muted">Team to verify external sources before presenting.</p></div></div>
+<div class="panel" style="margin-top:1.1rem"><h3>Keeping it fair without asking for proof</h3><p class="small">Email verification with a 6-digit code before anyone can book. A 10-hour cap per employee and a fixed pool, so misuse can’t run up costs. Visits of 4 hours or less. Requests outside a PSW’s scope, like moving house or repairs, are flagged to the employee and the provider, who can decline them. Each booking includes a one-tap confirmation that it’s for someone the employee looks after. In Phase 1, SE Health found most requests were legitimate, so these guardrails are light by design.</p></div>
+<div class="panel tablewrap" style="margin-top:1.1rem"><h3>PHIPA readiness check</h3><p class="small muted">Ontario’s Personal Health Information Protection Act applies to SE Health as a health information custodian, and SE Bridge would act on its behalf. HIPAA is US law and doesn’t apply here, but we used its safeguard checklist as a cross-check. This is a design self-check, not legal advice.</p>
+<table style="margin-top:.5rem"><thead><tr><th>Requirement</th><th>Status</th><th>What production needs</th></tr></thead><tbody>
+<tr><td>Collect only what’s needed</td><td><b>In place</b></td><td>Token, department and booking basics only. No names, diagnoses or proof of caregiving.</td></tr>
+<tr><td>Employer can’t see health information</td><td><b>In place</b></td><td>Totals only, groups under 5 hidden. Enforce in the database, and release totals on a schedule to stop inference.</td></tr>
+<tr><td>Agreement between SE Health and SE Bridge</td><td>Needed</td><td>A written agent or service provider agreement setting out what SE Bridge may do with the data.</td></tr>
+<tr><td>Consent of the person receiving care</td><td>Needed</td><td>The employee shares a postal code and requests about someone else. Add notice, and have the provider confirm consent at the first visit.</td></tr>
+<tr><td>Security safeguards</td><td>Partly</td><td>Encryption at rest, multi-factor sign-in for HR, role-based access, and a Canadian hosting region.</td></tr>
+<tr><td>Audit trail of who accessed what</td><td>Needed</td><td>A tamper-evident access log. The bridge log in this demo is for presentation only.</td></tr>
+<tr><td>Breach response</td><td>Needed</td><td>A plan to notify affected people and Ontario’s Information and Privacy Commissioner.</td></tr>
+<tr><td>Access, correction and retention</td><td>Needed</td><td>A way for people to see and correct their records, and a schedule for deleting visit details.</td></tr>
+<tr><td>Visit addresses</td><td><b>In place</b></td><td>Collected only after coverage is confirmed, with the care recipient’s agreement, and passed to the provider. Production should verify addresses with Canada Post data, store them in the provider’s system, and delete them from SE Bridge after the visit.</td></tr>
+<tr><td>Messages and reviews</td><td>Partly</td><td>They go to the provider only, with a warning not to share health details. In production, store them in the provider’s system.</td></tr>
+<tr><td>Honest privacy wording</td><td><b>In place</b></td><td>Tokens are pseudonymous, not anonymous: SE Bridge can match a token when that person signs in. Feedback is described as anonymous to the employer.</td></tr>
+</tbody></table></div>
+<div class="panel" style="margin-top:1.1rem"><h3>Known limits</h3><p class="small">Provider integration is simulated. Phone sign-in would need one-time codes. Production needs a PHIPA and PIPEDA privacy review, Canadian data residency, and totals released on a fixed schedule to stop people inferring small changes.</p></div>`}
+
+// ----- Provider simulator -----
+function simPanel(){const mine=S.bookings.filter(b=>['pending','booked','in_progress'].includes(b.status));
+ return`<div class="sim" role="dialog" aria-label="Provider simulator"><h3>Provider simulator</h3><p class="small muted">Stands in for the provider’s own system, which sends SE Bridge a signal when a PSW arrives and when the visit ends.</p>
+<h4 style="margin-top:.8rem">This employee’s visits</h4>${mine.length?mine.map(b=>`<div class="visit"><b class="small">${svc(b.svc).name}, ${fmtDate(b.date)}</b><div class="btns" style="margin-top:.4rem">${b.status==='pending'?`<span class="tiny muted" style="width:100%">Remote booking waiting for a coordinator</span><button class="btn sm" data-approve="${b.id}">Approve</button><button class="btn sm danger" data-decline="${b.id}">Decline</button>`:b.status==='booked'?`<button class="btn sm" data-arrive="${b.id}">PSW arrived</button>`:`<button class="btn sm" data-finish="${b.id}">Visit finished</button>`}</div></div>`).join(''):'<p class="small muted">No open visits. Book one in SE Shield.</p>'}
+<div class="btns"><button class="btn sm ghost" data-act="reopen">Reopen SE Shield (next sign-in)</button></div>
+<h4 style="margin-top:1rem">Other staff</h4><p class="small">${S.others.filter(o=>!o.done).length} other visits underway. Their hours count toward the pool and spend.</p>
+<div class="btns" style="margin-top:.3rem"><button class="btn sm ghost" data-act="othersStart">Start 8 visits</button><button class="btn sm ghost" data-act="othersEnd" ${S.others.some(o=>!o.done)?'':'disabled'}>Finish them</button></div>
+<div class="btns" style="margin-top:1rem"><button class="btn sm danger" data-act="reset">Reset demo</button></div></div>`}
+
+// ---------- Actions ----------
+async function doCheck(){S.err={};S.upload=null;S.preview=null;const lines=String(S.csv||'').replace(/^\uFEFF/,'').split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+ if(!lines.length){S.err.csv='The file is empty. It needs an email column and a department column.';return render()}
+ const cells=l=>l.split(',').map(x=>x.trim().replace(/^"|"$/g,''));
+ const head=cells(lines[0]).map(h=>h.toLowerCase());const hasHeader=!head.some(h=>h.includes('@'));
+ const ei=hasHeader?head.findIndex(h=>h.includes('email')):0,di=hasHeader?head.findIndex(h=>h.startsWith('dep')):1,li=hasHeader?head.findIndex(h=>h.includes('elig')):-1;
+ if(ei<0||di<0){S.err.csv='The file needs a column called email and a column called department.';return render()}
+ const start=hasHeader?1:0,seen=new Set(),rows=[];let invalid=0,dup=0,notEligible=0;
+ const have=new Set(S.staff.map(x=>x.token));let already=0;
+ for(const l of lines.slice(start)){const c=cells(l),e=c[ei]||'',d=c[di]||'',el=li>=0?(c[li]||''):'yes';const k=e.toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(k)){invalid++;continue}if(seen.has(k)){dup++;continue}seen.add(k);
+  if(!/^(y|yes|true|1)$/i.test(el)){notEligible++;continue}rows.push({email:k,dept:normDept(d)})}
+ if(!rows.length){S.err.csv='No valid staff rows found. Check that the email column has work emails.';return render()}
+ const fresh=[];for(const r of rows){r.token=await tokenFor(r.email);if(have.has(r.token))already++;else fresh.push(r)}
+ const c={};S.staff.forEach(x=>c[x.dept]=(c[x.dept]||0)+1);fresh.forEach(r=>c[r.dept]=(c[r.dept]||0)+1);const merged=[...new Set(fresh.map(r=>r.dept))].filter(k=>c[k]<MIN);
+ fresh.forEach(r=>r.deptOut=merged.includes(r.dept)?'Other':r.dept);
+ S.preview={ready:fresh,already,invalid,dup,notEligible,merged,hasElig:li>=0};render()}
+function doAdd(){const p=S.preview;const n=p.ready.length;S.staff=S.staff.concat(p.ready.map(r=>({token:r.token,dept:r.deptOut})));S.upload={added:n};S.preview=null;S.csv='';S.est.headcount=S.staff.length;
+ log('—',`${n} emails turned into tokens, emails discarded`,`Headcount by department (${S.staff.length} staff)`);toast(`${n} staff added. Emails discarded.`);render()}
+function newHires(){const names=[['noor','ahmed','Nursing'],['oliver','chan','Personal support'],['sofia','reyes','Nursing'],['kai','thompson','Facilities'],['liam','dubois','Administration']];
+ return['email,department',...names.map(([f,l,d])=>`${f}.${l}@maplecare.ca,${d}`),`${FIRST[4]}.${LAST[8]}4@maplecare.ca,Nursing`].join('\n')}
+async function doSignin(){const em=$('#em').value.trim().toLowerCase();S.err={};if(!em){S.err.em='Enter your work email.';return render()}
+ const tk=await tokenFor(em);const me=S.staff.find(s=>s.token===tk);if(!me){S.err.em='That email isn’t on your employer’s list. Check the spelling, or use the access code.';return render()}
+ const [u,dom]=em.split('@');S.pendingMe={me,workMasked:`${u[0]}•••@${dom}`};S.contact='personal';S.step='contact';
+ log('Matched their work email',`Email matched to token ${tk.slice(0,8)}`,'Nothing');render()}
+function contactView(){const pm=S.pendingMe,c=S.contact;return`<div class="progress"><span class="on"></span><span></span><span></span></div><h3>Where should we send your code and updates?</h3>
+<p class="small muted">We recommend a personal email or phone. Your employer’s IT team can often see work email, so a personal one keeps it private.</p>
+<div class="chips" role="radiogroup" aria-label="Send codes to">${[['personal','Personal email'],['phone','Mobile phone'],['work','Work email']].map(([v,l])=>`<button class="chip" role="radio" data-contact="${v}" aria-pressed="${c===v}" aria-checked="${c===v}">${l}</button>`).join('')}</div>
+${c==='personal'?`<label for="pe">Personal email</label><input id="pe" type="email" autocomplete="email" placeholder="you@gmail.com">`:c==='phone'?`<label for="ph">Mobile number</label><input id="ph" type="tel" autocomplete="tel" placeholder="416 555 0100">`:`<div class="warn small">Codes and visit updates will go to ${esc(pm.workMasked)}. People with access to your work email may see them.</div>`}
+${S.err.contact?`<p class="err">${esc(S.err.contact)}</p>`:''}
+<p class="tiny muted" style="margin-top:.6rem">Messages only say “Your SE Shield code” or “Visit update,” with no mention of caregiving. This contact goes to SE Shield, never to your employer.</p>
+<div class="btns"><button class="btn" data-act="sendCode">Send my code</button><button class="link small" data-act="signout">Use a different email</button></div>`}
+function sendCode(){const pm=S.pendingMe,c=S.contact;let masked;S.err={};
+ if(c==='personal'){const v=($('#pe').value||'').trim();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){S.err.contact='Enter a personal email address.';return render()}const[u,dom]=v.split('@');masked=`${u[0]}•••@${dom}`}
+ else if(c==='phone'){const v=($('#ph').value||'').replace(/\D/g,'');if(v.length<10){S.err.contact='Enter a 10-digit mobile number.';return render()}masked=`•••-•••-${v.slice(-4)}`}
+ else masked=pm.workMasked;
+ S.verify={me:pm.me,code:String(Math.floor(100000+Math.random()*900000)),masked,via:c,tries:0};S.pendingMe=null;S.step='verify';
+ log('Asked for a sign-in code',`Code sent to their chosen ${c==='phone'?'phone':c==='personal'?'personal email':'work email'}, not shared with the employer`,'Nothing');render()}
+function doVerify(){const v=S.verify,code=($('#otp').value||'').replace(/\D/g,'');S.err={};
+ if(v.tries>=5){S.err.otp='Too many tries. Send a new code.';return render()}
+ if(code.length!==6){S.err.otp='Enter all 6 digits.';return render()}
+ if(code!==v.code){v.tries++;S.err.otp=v.tries>=5?'Too many tries. Send a new code.':'That code doesn’t match. Check your email and try again.';return render()}
+ S.me=v.me;S.verify=null;S.step=S.attest?'home':'about';log('Verified their email',`Token ${S.me.token.slice(0,8)} signed in`,'Nothing');openedApp();render()}
+function openedApp(){if(S.bookings.some(b=>b.status==='done'&&!b.reviewed)){S.showReview=true;S.review={stars:0,saved:null,comment:''}}}
+function doBook(){const w=S.wiz;S.err={};if(w.when==='asap'&&!w.editId){const sl=asapSlot();w.date=sl.date;w.time=sl.time}
+ const start=at(w.date,w.time);const{min,max}=windowFor(w.cov.rural);
+ if(!w.editId&&!$('#purpose').checked){S.err.book='Tick the box to confirm who the visit is for.';return render()}
+ if(w.when!=='asap'&&(start<min||start>max)){S.err.book=w.cov.rural?'Rural visits need at least 2 days’ notice, up to 7 days ahead.':'Pick a time from the list, up to 7 days ahead, or choose As soon as possible.';return render()}
+ const t=totals();
+ if(w.editId){const b=S.bookings.find(x=>x.id===w.editId);if(!canChange(b)){S.err.book='This visit has already started, so it can’t be changed.';return render()}
+  const extra=w.hours-b.hours;if(extra>0&&t.committed+extra>S.pool){S.err.book='The employer’s pool is full, so you can’t add hours right now.';return render()}
+  Object.assign(b,{date:w.date,time:w.time,hours:w.hours});log(`Moved the visit to ${fmtDate(w.date)}`,`Token ${S.me.token.slice(0,8)}: visit moved, ${b.provider} notified`,extra?`${extra>0?'+':''}${extra} hours committed`:'Nothing changed');toast(`Visit moved to ${fmtDate(w.date)} at ${fmtTime(w.time)}`)}
+ else{const cap=pacedCapAt(S.day);if(t.committed+w.hours>cap){const full=cap>=S.pool;S.err.book=full?'Your employer’s respite pool is full. You’ve been added to the waitlist.':`This month’s share of hours is booked. More hours open on day ${pilotMonth()*30+1} of the pilot. You’ve been added to the waitlist.`;S.extraWait++;log('Tried to book',full?'Pool full, waitlisted':'Monthly share used, waitlisted','Waitlist +1');return render()}
+  const remote=w.cov.rural,worker=remote?null:ROSTER[w.cov.provider][Math.floor(Math.random()*4)];
+  S.bookings.push({id:Math.random().toString(36).slice(2),svc:w.svc,postal:w.cov.postal,rural:remote,provider:w.cov.provider,worker,date:w.date,time:w.time,hours:w.hours,tasks:[...w.tasks],addr:{...w.addr},status:remote?'pending':'booked',asap:w.when==='asap'});
+  S.savedAddr={...w.addr};
+  log('Gave the visit address',`Address encrypted and passed to ${w.cov.provider}. SE Bridge keeps only ${w.cov.postal.slice(0,3)}`,'Nothing');
+  if(remote){log(`Requested ${w.hours} h of ${svc(w.svc).name.toLowerCase()} in a remote area`,`Token ${S.me.token.slice(0,8)}: request sent to a ${w.cov.provider} coordinator for approval (travel distance)`,`+${w.hours} hours held from the pool`);toast(`Request sent. A ${w.cov.provider} coordinator will confirm, usually within 1 business day.`)}
+  else if(w.when==='asap'){log(`Asked for ${w.hours} h of ${svc(w.svc).name.toLowerCase()} as soon as possible`,`Token ${S.me.token.slice(0,8)}: urgent request sent to ${w.cov.provider}`,`+${w.hours} hours committed from the pool`);toast(`${worker} from ${w.cov.provider} is on the way. Estimated arrival ${fmtTime(w.time)}`)}
+  else{log(`Booked ${w.hours} h of ${svc(w.svc).name.toLowerCase()}`,`Token ${S.me.token.slice(0,8)} sent to ${w.cov.provider} with a ${w.tasks.length}-item to-do list`,`+${w.hours} hours committed from the pool`);toast(`${worker} from ${w.cov.provider} is booked for ${fmtDate(w.date)} at ${fmtTime(w.time)}`)}}
+ S.wiz=null;render()}
+
+document.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.go){S.view=d.go;S.simOpen=false;render();scrollTo({top:0});return}
+ if(d.tab){S.pulseTab=d.tab;S.view='pulse';render();return}
+ if(d.setup){const st=S.setup;switch(d.setup){case'agreement':st.agreement=true;toast('Agreement marked as signed');break;case'showInvite':st.show='invite';break;case'showBrief':st.show='brief';break;case'close':st.show='';break;
+  case'sendInvite':st.invites=true;st.show='';log('—',`The same invitation was sent to all ${S.staff.length} staff`,'Invitations sent (no one singled out)');toast(`Invitation sent to ${S.staff.length} staff`);break;
+  case'sendBrief':st.managers=true;st.show='';toast('Manager note sent');break}render();return}
+ if(d.chip!==undefined){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');return}
+ if(d.svc){S.wiz.svc=d.svc;render();return}
+ if(d.goto){S.wiz.step=+d.goto;render();return}
+ if(d.when){S.wiz.when=d.when;render();return}
+ if(d.contact){S.contact=d.contact;S.err={};render();return}
+ if(d.rmtask){S.wiz.tasks.splice(+d.rmtask,1);render();return}
+ if(d.sethours){S.wiz.hours=+d.sethours;toast(`Changed to ${d.sethours} hours`);render();return}
+ if(d.star){S.review.stars=+d.star;render();return}
+ if(d.saved){S.review.saved=d.saved;render();return}
+ if(d.change){const x=S.bookings.find(v=>v.id===d.change);S.wiz={step:3,editId:x.id,svc:x.svc,postal:x.postal,cov:{postal:x.postal,rural:x.rural,provider:x.provider},date:x.date,time:x.time,hours:x.hours,tasks:x.tasks,addr:x.addr};render();return}
+ if(d.cancel){const x=S.bookings.find(v=>v.id===d.cancel);if(!canCancel(x))return toast('This visit has already started.');x.status='cancelled';log('Cancelled a visit',`Token ${S.me.token.slice(0,8)}: ${x.hours} h returned`,`−${x.hours} hours committed`);toast(`Visit cancelled. ${x.hours} hours are back in your balance.`);render();return}
+ if(d.approve){const x=S.bookings.find(v=>v.id===d.approve);x.status='booked';x.worker=ROSTER[x.provider][Math.floor(Math.random()*4)];log('Remote booking approved',`${x.provider} coordinator approved and assigned ${x.worker}`,'Nothing new');toast(`Approved. ${x.worker} from ${x.provider} is booked.`);render();return}
+ if(d.decline){const x=S.bookings.find(v=>v.id===d.decline);x.status='declined';log('Remote booking not approved',`${x.provider} coordinator declined (no PSW for that distance), ${x.hours} h returned`,`−${x.hours} hours held, unmet demand +1 (remote)`);toast(`${x.provider} couldn’t approve this one. Hours returned.`);render();return}
+ if(d.chat){const[id,who]=d.chat.split('|');S.chat={id,who,draft:''};render();return}
+ if(d.arrive){const x=S.bookings.find(v=>v.id===d.arrive);x.status='in_progress';x.startedAt=Date.now();log(`${x.worker} arrived`,`${x.provider} started the visit for token ${S.me.token.slice(0,8)}`,'Live count +1 (shown once 5 or more)');toast(`${x.worker} has arrived and started at ${fmtClock(new Date())}`);render();return}
+ if(d.finish){const x=S.bookings.find(v=>v.id===d.finish);x.status='done';if(S.chat&&S.chat.id===x.id)S.chat=null;log('Visit finished',`${x.provider} logged ${x.hours} h for token ${S.me.token.slice(0,8)}`,`+${x.hours} hours delivered (no name)`);toast('Visit finished. The review appears next time SE Shield opens.');render();return}
+ const a=d.act;if(!a)return;
+ switch(a){
+ case'toggleSim':S.simOpen=!S.simOpen;break;
+ case'useMid':S.pool=Math.max(10,Math.round(estCalc().mid.hours));S.setup.poolSet=true;toast(`Pool set to ${S.pool} hours`);break;
+ case'useHigh':S.pool=Math.max(10,Math.round(estCalc().high.hours));S.setup.poolSet=true;toast(`Pool set to ${S.pool} hours`);break;
+ case'hrDemo':$('#hre').value='hr@maplecare.ca';$('#hrp').value='Maple-HR-2026';return;
+ case'hrLogin':{const em=$('#hre').value.trim().toLowerCase(),pw=$('#hrp').value;S.err={};
+  if(!em||!pw){S.err={hr:'Enter your work email and password.'};break}
+  if(!HR_ACCOUNTS[em]){S.err={hr:'This email hasn’t been invited as an HR administrator. Ask your SE Health contact.'};break}
+  if(HR_ACCOUNTS[em]!==pw){S.err={hr:'That password doesn’t match.'};break}
+  const[u,dom]=em.split('@');S.hrVerify={email:em,code:String(Math.floor(100000+Math.random()*900000)),masked:`${u[0]}•••@${dom}`,tries:0};S.hrStep='code';break}
+ case'hrVerify':{const v=S.hrVerify,c=($('#hrc').value||'').replace(/\D/g,'');S.err={};
+  if(v.tries>=5){S.err={hr:'Too many tries. Start again.'};break}
+  if(c!==v.code){v.tries++;S.err={hr:'That code doesn’t match.'};break}
+  S.hr={email:v.email};S.hrVerify=null;S.hrStep='login';S.pulseTab='setup';toast('Signed in as HR administrator');break}
+ case'hrBack':S.hrStep='login';S.hrVerify=null;S.err={};break;
+ case'hrSignout':S.hr=null;S.hrStep='login';S.err={};break;
+ case'sample':S.csv=sampleCSV();S.fileName='sample-staff-list.csv';return doCheck();
+ case'newHires':S.csv=newHires();S.fileName='sample-new-hires.csv';return doCheck();
+ case'check':return doCheck();
+ case'add':doAdd();return;
+ case'reupload':S.upload=null;S.fileName='';break;
+ case'demoEmail':$('#em').value=DEMO_EMAIL;return;
+ case'signin':return doSignin();
+ case'verifyCode':doVerify();return;
+ case'sendCode':sendCode();return;
+ case'print':window.print();return;
+ case'closeChat':S.chat=null;break;
+ case'sendMsg':sendMsg();return;
+ case'resend':S.verify.code=String(Math.floor(100000+Math.random()*900000));S.verify.tries=0;S.err={};toast('New code sent');break;
+ case'signout':S.me=null;S.verify=null;S.pendingMe=null;S.chat=null;S.step='signin';S.wiz=null;S.showReview=false;break;
+ case'attest':if(!$('#attest').checked){S.err={attest:'Tick the box to confirm. That’s all we ask.'};break}S.attest=true;S.err={};S.step='home';log('Confirmed they help someone',`Token ${S.me.token.slice(0,8)} enrolled, 10 hours`,'Signed up +1 (total only)');break;
+ case'startWiz':S.wiz={step:1,svc:null,postal:'',cov:null,date:'',time:'',hours:2,tasks:[],when:'asap'};S.err={};break;
+ case'wizBack':if(S.wiz.step===1||(S.wiz.editId&&S.wiz.step===3))S.wiz=null;else S.wiz.step--;S.err={};break;
+ case'checkPc':{const v=$('#pc').value;S.wiz.postal=v;if(!postalOk(v)){S.err={pc:'Enter a full Canadian postal code, like M4C 1B5.'};S.wiz.cov=null}else{S.err={};S.wiz.cov=coverage(v);if(S.wiz.addr&&S.wiz.addr.postal!==S.wiz.cov.postal)S.wiz.addr=null}break}
+ case'wizNext':if(S.wiz.step===2&&!saveAddr())break;S.wiz.step++;S.err={};break;
+ case'useSaved':S.wiz.addr={...S.savedAddr};S.err={};break;
+ case'addTask':{const v=$('#task').value;if(v)S.wiz.tasks.push(v);break}
+ case'addNote':{const v=$('#note').value.trim();if(v)S.wiz.tasks.push(v.slice(0,120));break}
+ case'book':doBook();return;
+ case'submitReview':{const x=S.bookings.find(v=>v.status==='done'&&!v.reviewed);const r=S.review,c=(r.comment||'').trim();x.reviewed=true;x.stars=r.stars||null;x.saved=r.saved||null;S.showReview=false;S.err={};
+  const parts=[x.stars?`${x.stars} stars`:'',x.saved?`sick day saved: ${x.saved}`:'',c?`comment sent to ${x.provider}`:''].filter(Boolean);
+  log('Sent feedback on the visit',`Token ${S.me.token.slice(0,8)}: ${parts.length?parts.join(', '):'no answers given'}`,'Average rating and sick days saved, after 5 answers');toast('Thank you. Your feedback is anonymous to your employer.');break}
+ case'later':S.showReview=false;S.err={};break;
+ case'reopen':if(!S.me){toast('Sign in to SE Shield first.');break}openedApp();if(!S.showReview)toast('No finished visit to review yet.');S.view=S.view==='split'?'split':'shield';S.simOpen=false;break;
+ case'othersStart':{if(!S.staff.length){toast('Add staff first.');break}let started=0,waited=0;for(let i=0;i<8;i++){const h=2+Math.floor(Math.random()*3);if(totals().committed+h>S.pool){waited++;continue}const r=Math.random();S.others.push({hours:h,svc:Math.random()<.6?'household':Math.random()<.6?'companion':'personal',done:false,saved:r<.6?'yes':r<.9?'no':'skip',stars:4+Math.round(Math.random())});started++}
+  S.extraWait+=waited;log('—',`${started} visits started for other staff${waited?`, ${waited} waitlisted (pool full)`:''}`,started?'Live count and pool hours updated':'Waitlist +'+waited);toast(waited?`${started} visits started. ${waited} waitlisted because the pool is full.`:`${started} visits started.`);break}
+ case'othersEnd':{const open=S.others.filter(o=>!o.done);const h=open.reduce((a,o)=>a+o.hours,0);open.forEach(o=>o.done=true);log('—',`${open.length} visits finished, ${h} hours logged`,`+${h} hours delivered, spend updated`);toast(`${open.length} visits finished. ${h} hours added to the dashboard.`);break}
+ case'play':if(S.playing){clearInterval(S.playing);S.playing=null;break}if(S.day>=90)S.day=1;S.playing=setInterval(()=>{S.day++;if(S.day>=90){S.day=90;clearInterval(S.playing);S.playing=null}if(S.view==='pulse'&&S.pulseTab==='dash')render();else{clearInterval(S.playing);S.playing=null}},70);break;
+ case'jump90':S.day=90;break;
+ case'reset':if(!confirm('Clear all demo data?'))return;if(S.playing)clearInterval(S.playing);Object.assign(S,{pool:POOL_DEFAULT,rate:RATE_DEFAULT,csv:'',fileName:'',paced:true,pendingMe:null,contact:'personal',pulseTab:'setup',hr:null,hrStep:'login',hrVerify:null,setup:{agreement:false,start:'',poolSet:false,invites:false,managers:false,show:''},preview:null,upload:null,staff:[],me:null,attest:false,step:'signin',wiz:null,bookings:[],showReview:false,others:[],extraWait:0,verify:null,chat:null,threads:{},savedAddr:null,day:1,playing:null,log:[],err:{},simOpen:false});await initKey();toast('Demo reset.');break}
+ render()});
+
+document.addEventListener('input',async e=>{const t=e.target,d=t.dataset;
+ if(d.est!==undefined){S.est[d.est]=+t.value;const m={uptake:'v-u',high:'v-hi',avg:'v-a'}[d.est];if(m)$('#'+m).textContent=t.value;$('#estOut').innerHTML=estOut();return}
+ if(d.rate!==undefined){S.rate=Math.max(1,+t.value||RATE_DEFAULT);$('#estOut').innerHTML=estOut();return}
+ if(d.day!==undefined){S.day=+t.value;if(S.playing){clearInterval(S.playing);S.playing=null}render();const r=document.querySelector('[data-day]');r&&r.focus();return}
+ if(d.growth!==undefined){S.growth=+t.value;render();const r=document.querySelector('[data-growth]');r&&r.focus();return}
+ if(d.rc!==undefined){S.review.comment=t.value;return}
+ if(d.msg!==undefined&&S.chat){S.chat.draft=t.value;return}
+ if(d.daycost!==undefined){S.dayCost=Math.max(0,+t.value||0);const el=$('#valueBox');if(el)el.innerHTML=valueInner(totals());return}
+ if(t.id==='purpose'&&S.wiz){S.wiz.purpose=t.checked;return}
+ if(d.try!==undefined){$('#tryOut').textContent=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t.value.trim())?await tokenFor(t.value):'type a full email';return}});
+document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
+ if(d.paced!==undefined){S.paced=t.checked;toast(S.paced?'Pool will be released monthly':'Whole pool available from day 1');render();return}
+ if(d.pstart!==undefined){S.setup.start=t.value;render();return}
+ if(d.csvfile!==undefined){const f=t.files&&t.files[0];if(!f)return;if(f.size>5e6){S.err={csv:'That file is over 5 MB. Split it into smaller files.'};render();return}
+  const rd=new FileReader();rd.onload=()=>{S.csv=String(rd.result);S.fileName=f.name;doCheck()};rd.onerror=()=>{S.err={csv:'That file couldn’t be read. Save it as CSV and try again.'};render()};rd.readAsText(f);return}
+ if(d.wiz){S.wiz[d.wiz]=d.wiz==='hours'?+t.value:t.value;render();return}
+ if(d.admin!==undefined){S.admin=Math.max(0,+t.value||0);render()}});
+document.addEventListener('toggle',e=>{if(e.target.id==='scopeInfo')S.scopeOpen=e.target.open},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.simOpen){S.simOpen=false;render()}if(e.key==='Enter'&&e.target.id==='msg'){e.preventDefault();sendMsg()}});
+
+$('#brandmark').innerHTML=logo('bridge',34);$('#leaf').innerHTML=leaf(14);
+initKey().then(render);
+// Keep HR views fresh while open, without interrupting typing.
+setInterval(()=>{const busy=document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);if(busy||S.playing)return;if(S.view==='split'||(S.view==='pulse'&&S.pulseTab==='dash'))render()},5000);
+</script>
+</body>
+</html>
